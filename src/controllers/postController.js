@@ -17,3 +17,21 @@ exports.getPosts = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 };
+
+exports.updatePost = async (req, res) => {
+    try {
+        const post = await Post.update(req.body, { where: { id: req.params.id } });
+        res.json(post);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
+exports.deletePost = async (req, res) => {
+    try {
+        await Post.destroy({ where: { id: req.params.id } });
+        res.status(204).send();
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};

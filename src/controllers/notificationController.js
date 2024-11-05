@@ -17,3 +17,21 @@ exports.getNotifications = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 };
+
+exports.updateNotification = async (req, res) => {
+    try {
+        const notification = await Notification.update(req.body, { where: { id: req.params.id } });
+        res.json(notification);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
+exports.deleteNotification = async (req, res) => {
+    try {
+        await Notification.destroy({ where: { id: req.params.id } });
+        res.status(204).send();
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};

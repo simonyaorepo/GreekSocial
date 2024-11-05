@@ -17,3 +17,21 @@ exports.getRolePermissions = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 };
+
+exports.updateRolePermission = async (req, res) => {
+    try {
+        const rolePermission = await RolePermission.update(req.body, { where: { id: req.params.id } });
+        res.json(rolePermission);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
+exports.deleteRolePermission = async (req, res) => {
+    try {
+        await RolePermission.destroy({ where: { id: req.params.id } });
+        res.status(204).send();
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
