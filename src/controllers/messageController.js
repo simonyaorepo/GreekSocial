@@ -1,18 +1,28 @@
-const Message = require('../models/messageModel');
+const messageService = require('../services/messageService');
 
 exports.createMessage = async (req, res) => {
     try {
-        const message = await Message.create(req.body);
+        const message = await messageService.createMessageService(req.body);
         res.status(201).json(message);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 };
 
-exports.getMessages = async (req, res) => {
+exports.getAllMessages = async (req, res) => {
     try {
-        const messages = await Message.findAll();
+        const messages = await messageService.getAllMessagesService();
         res.status(200).json(messages);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
+exports.getMessageById = async (req, res) => {
+    try {
+        const message = await messageService.getMessageByIdService(req.params.id);
+        if (!message) return res.status(404).json({ message: "Message not found" });
+        res.status(200).json(message);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -20,8 +30,8 @@ exports.getMessages = async (req, res) => {
 
 exports.updateMessage = async (req, res) => {
     try {
-        const message = await Message.update(req.body, { where: { id: req.params.id } });
-        res.json(message);
+        const updatedMessage = await messageService.updateMessageService(req.params.id, req.body);
+        res.status(200).json(updatedMessage);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -29,9 +39,9 @@ exports.updateMessage = async (req, res) => {
 
 exports.deleteMessage = async (req, res) => {
     try {
-        await Message.destroy({ where: { id: req.params.id } });
-        res.status(204).send();
+        await messageService.deleteMessageService(req.params.id);
+        res.status(204).json();
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(400).json({ message: error.message });
     }
 };

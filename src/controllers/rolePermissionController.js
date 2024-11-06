@@ -1,27 +1,28 @@
-const RolePermission = require('../models/rolePermissionModel');
+const rolePermissionService = require('../services/rolePermissionService');
 
 exports.createRolePermission = async (req, res) => {
     try {
-        const rolePermission = await RolePermission.create(req.body);
+        const rolePermission = await rolePermissionService.createRolePermissionService(req.body);
         res.status(201).json(rolePermission);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 };
 
-exports.getRolePermissions = async (req, res) => {
+exports.getAllRolePermissions = async (req, res) => {
     try {
-        const rolePermissions = await RolePermission.findAll();
+        const rolePermissions = await rolePermissionService.getAllRolePermissionsService();
         res.status(200).json(rolePermissions);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 };
 
-exports.updateRolePermission = async (req, res) => {
+exports.getRolePermissionById = async (req, res) => {
     try {
-        const rolePermission = await RolePermission.update(req.body, { where: { id: req.params.id } });
-        res.json(rolePermission);
+        const rolePermission = await rolePermissionService.getRolePermissionByIdService(req.params.id);
+        if (!rolePermission) return res.status(404).json({ message: "RolePermission not found" });
+        res.status(200).json(rolePermission);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -29,9 +30,9 @@ exports.updateRolePermission = async (req, res) => {
 
 exports.deleteRolePermission = async (req, res) => {
     try {
-        await RolePermission.destroy({ where: { id: req.params.id } });
-        res.status(204).send();
+        await rolePermissionService.deleteRolePermissionService(req.params.id);
+        res.status(204).json();
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(400).json({ message: error.message });
     }
 };

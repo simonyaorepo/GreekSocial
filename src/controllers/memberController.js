@@ -1,18 +1,28 @@
-const Member = require('../models/memberModel');
+const memberService = require('../services/memberService');
 
 exports.createMember = async (req, res) => {
     try {
-        const member = await Member.create(req.body);
+        const member = await memberService.createMemberService(req.body);
         res.status(201).json(member);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 };
 
-exports.getMembers = async (req, res) => {
+exports.getAllMembers = async (req, res) => {
     try {
-        const members = await Member.findAll();
+        const members = await memberService.getAllMembersService();
         res.status(200).json(members);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
+exports.getMemberById = async (req, res) => {
+    try {
+        const member = await memberService.getMemberByIdService(req.params.id);
+        if (!member) return res.status(404).json({ message: "Member not found" });
+        res.status(200).json(member);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -20,8 +30,8 @@ exports.getMembers = async (req, res) => {
 
 exports.updateMember = async (req, res) => {
     try {
-        const member = await Member.update(req.body, { where: { id: req.params.id } });
-        res.json(member);
+        const updatedMember = await memberService.updateMemberService(req.params.id, req.body);
+        res.status(200).json(updatedMember);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -29,9 +39,9 @@ exports.updateMember = async (req, res) => {
 
 exports.deleteMember = async (req, res) => {
     try {
-        await Member.destroy({ where: { id: req.params.id } });
-        res.status(204).send();
+        await memberService.deleteMemberService(req.params.id);
+        res.status(204).json();
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(400).json({ message: error.message });
     }
 };

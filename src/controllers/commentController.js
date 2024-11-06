@@ -1,18 +1,28 @@
-const Comment = require('../models/commentModel');
+const commentService = require('../services/commentService');
 
 exports.createComment = async (req, res) => {
     try {
-        const comment = await Comment.create(req.body);
+        const comment = await commentService.createCommentService(req.body);
         res.status(201).json(comment);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 };
 
-exports.getComments = async (req, res) => {
+exports.getAllComments = async (req, res) => {
     try {
-        const comments = await Comment.findAll();
+        const comments = await commentService.getAllCommentsService();
         res.status(200).json(comments);
+    } catch (error) {
+        res.status(400).json({ message: error.message });
+    }
+};
+
+exports.getCommentById = async (req, res) => {
+    try {
+        const comment = await commentService.getCommentByIdService(req.params.id);
+        if (!comment) return res.status(404).json({ message: "Comment not found" });
+        res.status(200).json(comment);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
@@ -20,18 +30,18 @@ exports.getComments = async (req, res) => {
 
 exports.updateComment = async (req, res) => {
     try {
-        const comment = await Comment.update(req.body, { where: { id: req.params.id } });
-        res.json(comment);
+        const updatedComment = await commentService.updateCommentService(req.params.id, req.body);
+        res.status(200).json(updatedComment);
     } catch (error) {
         res.status(400).json({ message: error.message });
     }
 };
 
-xports.deleteComment = async (req, res) => {
+exports.deleteComment = async (req, res) => {
     try {
-        await Comment.destroy({ where: { id: req.params.id } });
-        res.status(204).send();
+        await commentService.deleteCommentService(req.params.id);
+        res.status(204).json();
     } catch (error) {
-        res.status(500).json({ message: error.message });
+        res.status(400).json({ message: error.message });
     }
 };
