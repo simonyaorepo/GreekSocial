@@ -1,7 +1,6 @@
-// memberAccountModel.js
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const Member = require('./memberModel'); // Reference Member
+const Member = require('./member');
 
 const MemberAccount = sequelize.define('MemberAccount', {
   id: {
@@ -22,22 +21,15 @@ const MemberAccount = sequelize.define('MemberAccount', {
     allowNull: false,
     unique: true,
   },
-  password_hash: {
+  password: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-  },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
-  },
+}, {
+  tableName: 'member_accounts',
+  timestamps: false,
 });
 
-// Relationships
 MemberAccount.belongsTo(Member, { foreignKey: 'member_id' });
 
 module.exports = MemberAccount;

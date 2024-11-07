@@ -1,7 +1,6 @@
-// chapterAccountModel.js
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const Chapter = require('./chapterModel'); // Reference Chapter
+const Chapter = require('./chapter');
 
 const ChapterAccount = sequelize.define('ChapterAccount', {
   id: {
@@ -22,22 +21,15 @@ const ChapterAccount = sequelize.define('ChapterAccount', {
     allowNull: false,
     unique: true,
   },
-  password_hash: {
+  password: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  email: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    unique: true,
-  },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
-  },
+}, {
+  tableName: 'chapter_accounts',
+  timestamps: false, // Optional: Specify if you don't want timestamps (created_at, updated_at)
 });
 
-// Relationships
 ChapterAccount.belongsTo(Chapter, { foreignKey: 'chapter_id' });
 
 module.exports = ChapterAccount;

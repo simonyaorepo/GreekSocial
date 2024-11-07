@@ -1,35 +1,38 @@
-// models/notification.js
-module.exports = (sequelize, DataTypes) => {
-    const Notification = sequelize.define('Notification', {
-      id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-      },
-      user_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      message: {
-        type: DataTypes.STRING,
-      },
-      is_read: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-      },
-      created_at: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-      },
-    }, {
-      tableName: 'notifications',
-      timestamps: false,
-    });
-  
-    Notification.associate = function(models) {
-      Notification.belongsTo(models.Member, { foreignKey: 'user_id' });
-    };
-  
-    return Notification;
-  };
-  
+const { Sequelize, DataTypes } = require('sequelize');
+const { sequelize } = require('../config/db');
+const Member = require('./member');
+
+const Notification = sequelize.define('Notification', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  user_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Member,
+      key: 'id',
+    },
+    allowNull: false,
+  },
+  message: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  is_read: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+  },
+  created_at: {
+    type: DataTypes.DATE,
+    defaultValue: Sequelize.NOW,
+  },
+}, {
+  tableName: 'notifications',
+  timestamps: false,
+});
+
+Notification.belongsTo(Member, { foreignKey: 'user_id' });
+
+module.exports = Notification;

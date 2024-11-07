@@ -1,37 +1,39 @@
-// models/message.js
-module.exports = (sequelize, DataTypes) => {
-    const Message = sequelize.define('Message', {
-      id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
-      },
-      sender_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      receiver_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      content: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      created_at: {
-        type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW,
-      },
-    }, {
-      tableName: 'messages',
-      timestamps: false,
-    });
-  
-    Message.associate = function(models) {
-      Message.belongsTo(models.Member, { foreignKey: 'sender_id' });
-      Message.belongsTo(models.Member, { foreignKey: 'receiver_id' });
-    };
-  
-    return Message;
-  };
-  
+const { Sequelize, DataTypes } = require('sequelize');
+const { sequelize } = require('../config/db');
+const Member = require('./memberModel');
+
+const Message = sequelize.define('Message', {
+  id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  },
+  sender_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Member,
+      key: 'id',
+    },
+  },
+  receiver_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Member,
+      key: 'id',
+    },
+  },
+  content: {
+    type: DataTypes.TEXT,
+  },
+  created_at: {
+    type: DataTypes.DATE,
+    defaultValue: Sequelize.NOW,
+  },
+});
+
+Message.associate = (models) => {
+  Message.belongsTo(models.Member, { foreignKey: 'sender_id', as: 'sender' });
+  Message.belongsTo(models.Member, { foreignKey: 'receiver_id', as: 'receiver' });
+};
+
+module.exports = Message;

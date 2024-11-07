@@ -1,23 +1,14 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const Post = require('./post');
 const Member = require('./member');
 
-const Comment = sequelize.define('Comment', {
+const Friendship = sequelize.define('Friendship', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  post_id: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Post,
-      key: 'id',
-    },
-    allowNull: false,
-  },
-  user_id: {
+  member_1_id: {
     type: DataTypes.INTEGER,
     references: {
       model: Member,
@@ -25,20 +16,28 @@ const Comment = sequelize.define('Comment', {
     },
     allowNull: false,
   },
-  content: {
-    type: DataTypes.STRING,
+  member_2_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Member,
+      key: 'id',
+    },
     allowNull: false,
+  },
+  status: {
+    type: DataTypes.STRING,
+    defaultValue: 'pending',
   },
   created_at: {
     type: DataTypes.DATE,
     defaultValue: Sequelize.NOW,
   },
 }, {
-  tableName: 'comments',
+  tableName: 'friendships',
   timestamps: false,
 });
 
-Comment.belongsTo(Post, { foreignKey: 'post_id' });
-Comment.belongsTo(Member, { foreignKey: 'user_id' });
+Friendship.belongsTo(Member, { foreignKey: 'member_1_id' });
+Friendship.belongsTo(Member, { foreignKey: 'member_2_id' });
 
-module.exports = Comment;
+module.exports = Friendship;
