@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const Member = require('./member');
+const Member = require('./memberModel');
 
 const Friendship = sequelize.define('Friendship', {
   id: {
@@ -37,7 +37,9 @@ const Friendship = sequelize.define('Friendship', {
   timestamps: false,
 });
 
-Friendship.belongsTo(Member, { foreignKey: 'member_1_id' });
-Friendship.belongsTo(Member, { foreignKey: 'member_2_id' });
+Friendship.associate = (models) => {
+  Friendship.belongsTo(models.Member, { foreignKey: 'member_1_id', as: 'member_1' });
+  Friendship.belongsTo(models.Member, { foreignKey: 'member_2_id', as: 'member_2' });
+};
 
 module.exports = Friendship;

@@ -1,10 +1,10 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const Organization = require('./organization');
-const Post = require('./post');
-const Event = require('./event');
-const Member = require('./member');
-const ChapterAccount = require('./chapteraccount');
+const Organization = require('./organizationModel');
+const Post = require('./postModel');
+const Event = require('./eventModel');
+const Member = require('./memberModel');
+const ChapterAccount = require('./chapterAccountModel');
 
 const Chapter = sequelize.define('Chapter', {
   id: {
@@ -34,13 +34,15 @@ const Chapter = sequelize.define('Chapter', {
   },
 }, {
   tableName: 'chapters',
-  timestamps: false, // Optional: Specify if you don't want timestamps (created_at, updated_at)
+  timestamps: false,
 });
 
-Chapter.belongsTo(Organization, { foreignKey: 'organization_id' });
-Chapter.hasMany(Post);
-Chapter.hasMany(Event);
-Chapter.hasMany(Member);
-Chapter.hasOne(ChapterAccount);
+Chapter.associate = (models) => {
+  Chapter.belongsTo(models.Organization, { foreignKey: 'organization_id' });
+  Chapter.hasMany(models.Post, { foreignKey: 'chapter_id' });
+  Chapter.hasMany(models.Event, { foreignKey: 'chapter_id' });
+  Chapter.hasMany(models.Member, { foreignKey: 'chapter_id' });
+  Chapter.hasOne(models.ChapterAccount, { foreignKey: 'chapter_id' });
+};
 
 module.exports = Chapter;

@@ -14,6 +14,7 @@ const Message = sequelize.define('Message', {
       model: Member,
       key: 'id',
     },
+    allowNull: false,
   },
   receiver_id: {
     type: DataTypes.INTEGER,
@@ -21,14 +22,19 @@ const Message = sequelize.define('Message', {
       model: Member,
       key: 'id',
     },
+    allowNull: false,
   },
   content: {
-    type: DataTypes.TEXT,
+    type: DataTypes.STRING,
+    allowNull: false,
   },
   created_at: {
     type: DataTypes.DATE,
     defaultValue: Sequelize.NOW,
   },
+}, {
+  tableName: 'messages',
+  timestamps: false,
 });
 
 Message.associate = (models) => {

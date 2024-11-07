@@ -1,10 +1,10 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const Member = require('./member');
-const Chapter = require('./chapter');
-const Organization = require('./organization');
-const Comment = require('./comment');
-const Like = require('./like');
+const Chapter = require('./chapterModel');
+const Member = require('./memberModel');
+const Organization = require('./organizationModel');
+const Comment = require('./commentModel');
+const Like = require('./likeModel');
 
 const Post = sequelize.define('Post', {
   id: {
@@ -57,10 +57,12 @@ const Post = sequelize.define('Post', {
   timestamps: false,
 });
 
-Post.belongsTo(Member, { foreignKey: 'member_id' });
-Post.belongsTo(Chapter, { foreignKey: 'chapter_id' });
-Post.belongsTo(Organization, { foreignKey: 'organization_id' });
-Post.hasMany(Comment);
-Post.hasMany(Like);
+Post.associate = (models) => {
+  Post.belongsTo(models.Member, { foreignKey: 'member_id' });
+  Post.belongsTo(models.Chapter, { foreignKey: 'chapter_id' });
+  Post.belongsTo(models.Organization, { foreignKey: 'organization_id' });
+  Post.hasMany(models.Comment, { foreignKey: 'post_id' });
+  Post.hasMany(models.Like, { foreignKey: 'post_id' });
+};
 
 module.exports = Post;

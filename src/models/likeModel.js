@@ -1,7 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const Post = require('./post');
-const Member = require('./member');
+const Post = require('./postModel');
+const Member = require('./memberModel');
 
 const Like = sequelize.define('Like', {
   id: {
@@ -17,7 +17,7 @@ const Like = sequelize.define('Like', {
     },
     allowNull: false,
   },
-  user_id: {
+  member_id: {
     type: DataTypes.INTEGER,
     references: {
       model: Member,
@@ -34,7 +34,9 @@ const Like = sequelize.define('Like', {
   timestamps: false,
 });
 
-Like.belongsTo(Post, { foreignKey: 'post_id' });
-Like.belongsTo(Member, { foreignKey: 'user_id' });
+Like.associate = (models) => {
+  Like.belongsTo(models.Post, { foreignKey: 'post_id' });
+  Like.belongsTo(models.Member, { foreignKey: 'member_id' });
+};
 
 module.exports = Like;

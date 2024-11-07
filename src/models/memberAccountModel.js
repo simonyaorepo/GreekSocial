@@ -1,35 +1,42 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const Member = require('./member');
+const Chapter = require('./chapterModel');
 
-const MemberAccount = sequelize.define('MemberAccount', {
+const Member = sequelize.define('Member', {
   id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
   },
-  member_id: {
+  chapter_id: {
     type: DataTypes.INTEGER,
     references: {
-      model: Member,
+      model: Chapter,
       key: 'id',
     },
     allowNull: false,
   },
-  username: {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  email: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
   },
-  password: {
-    type: DataTypes.STRING,
-    allowNull: false,
+  join_date: {
+    type: DataTypes.DATE,
+    defaultValue: Sequelize.NOW,
   },
 }, {
-  tableName: 'member_accounts',
+  tableName: 'members',
   timestamps: false,
 });
 
-MemberAccount.belongsTo(Member, { foreignKey: 'member_id' });
+// Define associations outside of the model definition
+Member.associate = (models) => {
+  Member.belongsTo(models.Chapter, { foreignKey: 'chapter_id' });
+};
 
-module.exports = MemberAccount;
+module.exports = Member;

@@ -10,7 +10,6 @@ const Permission = sequelize.define('Permission', {
   permission_name: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
   },
 }, {
   tableName: 'permissions',

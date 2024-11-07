@@ -1,6 +1,6 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const Chapter = require('./chapter');
+const Chapter = require('./chapterModel');
 
 const Organization = sequelize.define('Organization', {
   id: {
@@ -29,6 +29,8 @@ const Organization = sequelize.define('Organization', {
   timestamps: false,
 });
 
-Organization.hasMany(Chapter);
+Organization.associate = (models) => {
+  Organization.hasMany(models.Chapter, { foreignKey: 'organization_id' });
+};
 
 module.exports = Organization;

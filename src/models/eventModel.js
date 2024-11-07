@@ -1,6 +1,7 @@
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const Chapter = require('./chapter');
+const Chapter = require('./chapterModel');
+const Organization = require('./organizationModel');
 
 const Event = sequelize.define('Event', {
   id: {
@@ -14,7 +15,15 @@ const Event = sequelize.define('Event', {
       model: Chapter,
       key: 'id',
     },
-    allowNull: false,
+    allowNull: true,
+  },
+  organization_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Organization,
+      key: 'id',
+    },
+    allowNull: true,
   },
   event_name: {
     type: DataTypes.STRING,
@@ -36,15 +45,14 @@ const Event = sequelize.define('Event', {
     type: DataTypes.STRING,
     defaultValue: 'public',
   },
-  involved_chapters: {
-    type: DataTypes.JSONB,
-    allowNull: true,
-  },
 }, {
   tableName: 'events',
   timestamps: false,
 });
 
-Event.belongsTo(Chapter, { foreignKey: 'chapter_id' });
+Event.associate = (models) => {
+  Event.belongsTo(models.Chapter, { foreignKey: 'chapter_id' });
+  Event.belongsTo(models.Organization, { foreignKey: 'organization_id' });
+};
 
 module.exports = Event;
