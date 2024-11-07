@@ -11,18 +11,44 @@ const ChapterAccount = sequelize.define('ChapterAccount', {
   chapter_id: {
     type: DataTypes.INTEGER,
     references: {
-      model: Chapter,
+      model: Chapter,  // References the 'id' column of the Chapter model
       key: 'id',
     },
     allowNull: false,
   },
+  account_type: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,  // Ensure the email is unique
+  },
+  password_hash: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  created_at: {
+    type: DataTypes.DATE,
+    defaultValue: Sequelize.NOW,  // Set to the current timestamp by default
+  },
+  updated_at: {
+    type: DataTypes.DATE,
+    defaultValue: Sequelize.NOW,  // Set to the current timestamp by default
+  },
 }, {
-  tableName: 'chapter_accounts',
-  timestamps: false,
+  tableName: 'chapter_account',  // Specify custom table name
+  timestamps: false,  // Disable default Sequelize timestamps
 });
 
+// Define associations with the Chapter model
 ChapterAccount.associate = (models) => {
-  ChapterAccount.belongsTo(models.Chapter, { foreignKey: 'chapter_id' });
+  ChapterAccount.belongsTo(models.Chapter, { foreignKey: 'chapter_id', as: 'chapter' });
 };
 
 module.exports = ChapterAccount;

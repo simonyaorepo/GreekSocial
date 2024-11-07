@@ -33,7 +33,7 @@ const Message = sequelize.define('Message', {
     defaultValue: Sequelize.NOW,
   },
 }, {
-  tableName: 'messages',
+  tableName: 'message',
   timestamps: false,
 });
 

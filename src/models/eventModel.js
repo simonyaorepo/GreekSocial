@@ -46,7 +46,7 @@ const Event = sequelize.define('Event', {
     defaultValue: 'public',
   },
 }, {
-  tableName: 'events',
+  tableName: 'event',
   timestamps: false,
 });
 

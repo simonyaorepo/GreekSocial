@@ -5,6 +5,7 @@ const Post = require('./postModel');
 const Event = require('./eventModel');
 const Member = require('./memberModel');
 const ChapterAccount = require('./chapterAccountModel');
+const Notification = require('./notificationModel');
 
 const Chapter = sequelize.define('Chapter', {
   id: {
@@ -33,7 +34,7 @@ const Chapter = sequelize.define('Chapter', {
     defaultValue: Sequelize.NOW,
   },
 }, {
-  tableName: 'chapters',
+  tableName: 'chapter',
   timestamps: false,
 });
 
@@ -43,6 +44,7 @@ Chapter.associate = (models) => {
   Chapter.hasMany(models.Event, { foreignKey: 'chapter_id' });
   Chapter.hasMany(models.Member, { foreignKey: 'chapter_id' });
   Chapter.hasOne(models.ChapterAccount, { foreignKey: 'chapter_id' });
+  Chapter.hasMany(models.Notification, { foreignKey: 'chapter_id', as: 'notifications' });
 };
 
 module.exports = Chapter;

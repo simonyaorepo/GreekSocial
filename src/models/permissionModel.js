@@ -12,7 +12,7 @@ const Permission = sequelize.define('Permission', {
     allowNull: false,
   },
 }, {
-  tableName: 'permissions',
+  tableName: 'permission',
   timestamps: false,
 });
 

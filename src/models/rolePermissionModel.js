@@ -21,7 +21,7 @@ const RolePermission = sequelize.define('RolePermission', {
     allowNull: false,
   },
 }, {
-  tableName: 'role_permissions',
+  tableName: 'role_permission',
   timestamps: false,
 });
 

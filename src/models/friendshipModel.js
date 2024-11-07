@@ -8,38 +8,43 @@ const Friendship = sequelize.define('Friendship', {
     primaryKey: true,
     autoIncrement: true,
   },
-  member_1_id: {
+  member_id: {
     type: DataTypes.INTEGER,
     references: {
-      model: Member,
+      model: Member,  // References the 'id' column of the Member model
       key: 'id',
     },
     allowNull: false,
   },
-  member_2_id: {
+  friend_id: {
     type: DataTypes.INTEGER,
     references: {
-      model: Member,
+      model: Member,  // References the 'id' column of the Member model
       key: 'id',
     },
     allowNull: false,
   },
   status: {
     type: DataTypes.STRING,
-    defaultValue: 'pending',
+    defaultValue: 'pending',  // Default value for status
   },
   created_at: {
     type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
+    defaultValue: Sequelize.NOW,  // Set to the current timestamp by default
+  },
+  updated_at: {
+    type: DataTypes.DATE,
+    defaultValue: Sequelize.NOW,  // Set to the current timestamp by default
   },
 }, {
-  tableName: 'friendships',
-  timestamps: false,
+  tableName: 'friendship',  // Specify custom table name (optional)
+  timestamps: false,  // Disable timestamps (as we're defining 'created_at' and 'updated_at' explicitly)
 });
 
+// Define associations with Member model
 Friendship.associate = (models) => {
-  Friendship.belongsTo(models.Member, { foreignKey: 'member_1_id', as: 'member_1' });
-  Friendship.belongsTo(models.Member, { foreignKey: 'member_2_id', as: 'member_2' });
+  Friendship.belongsTo(models.Member, { foreignKey: 'member_id', as: 'member' });
+  Friendship.belongsTo(models.Member, { foreignKey: 'friend_id', as: 'friend' });
 };
 
 module.exports = Friendship;

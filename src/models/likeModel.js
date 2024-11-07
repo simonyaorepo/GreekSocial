@@ -30,7 +30,7 @@ const Like = sequelize.define('Like', {
     defaultValue: Sequelize.NOW,
   },
 }, {
-  tableName: 'likes',
+  tableName: 'like',
   timestamps: false,
 });
 

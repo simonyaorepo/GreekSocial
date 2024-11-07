@@ -34,14 +34,14 @@ const Member = sequelize.define('Member', {
     defaultValue: Sequelize.NOW,
   },
 }, {
-  tableName: 'members',
+  tableName: 'member',
   timestamps: false,
 });
 
 Member.associate = (models) => {
   Member.belongsTo(models.Chapter, { foreignKey: 'chapter_id' });
-  Member.hasMany(models.Friendship, { foreignKey: 'member_1_id' });
-  Member.hasMany(models.Friendship, { foreignKey: 'member_2_id' });
+  Member.hasMany(models.Friendship, { foreignKey: 'member_id' });
+  Member.hasMany(models.Friendship, { foreignKey: 'friend_id' });
   Member.hasMany(models.Post, { foreignKey: 'member_id' });
   Member.hasMany(models.Message, { foreignKey: 'sender_id' });
   Member.hasMany(models.Message, { foreignKey: 'receiver_id' });

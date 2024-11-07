@@ -1,7 +1,6 @@
-// organizationAccountModel.js
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const Organization = require('./organizationModel'); // Reference Organization
+const Organization = require('./organizationModel');
 
 const OrganizationAccount = sequelize.define('OrganizationAccount', {
   id: {
@@ -12,32 +11,44 @@ const OrganizationAccount = sequelize.define('OrganizationAccount', {
   organization_id: {
     type: DataTypes.INTEGER,
     references: {
-      model: Organization,
+      model: Organization,  // References the 'id' column of the Organization model
       key: 'id',
     },
     allowNull: false,
   },
-  username: {
+  account_type: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
   },
-  password_hash: {
+  username: {
     type: DataTypes.STRING,
     allowNull: false,
   },
   email: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,
+    unique: true,  // Ensure the email is unique
+  },
+  password_hash: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
   created_at: {
     type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
+    defaultValue: Sequelize.NOW,  // Set to the current timestamp by default
   },
+  updated_at: {
+    type: DataTypes.DATE,
+    defaultValue: Sequelize.NOW,  // Set to the current timestamp by default
+  },
+}, {
+  tableName: 'organization_account',  // Specify custom table name
+  timestamps: false,  // Disable default Sequelize timestamps
 });
 
-// Relationships
-OrganizationAccount.belongsTo(Organization, { foreignKey: 'organization_id' });
+// Define associations with the Organization model
+OrganizationAccount.associate = (models) => {
+  OrganizationAccount.belongsTo(models.Organization, { foreignKey: 'organization_id', as: 'organization' });
+};
 
 module.exports = OrganizationAccount;

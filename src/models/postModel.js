@@ -53,7 +53,7 @@ const Post = sequelize.define('Post', {
     defaultValue: 'public',
   },
 }, {
-  tableName: 'posts',
+  tableName: 'post',
   timestamps: false,
 });
 
