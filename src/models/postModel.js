@@ -55,6 +55,7 @@ const Post = sequelize.define('Post', {
 }, {
   tableName: 'post',
   timestamps: false,
+  underscored: true
 });
 
 Post.associate = (models) => {

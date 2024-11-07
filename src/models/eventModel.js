@@ -48,6 +48,7 @@ const Event = sequelize.define('Event', {
 }, {
   tableName: 'event',
   timestamps: false,
+  underscored: true
 });
 
 Event.associate = (models) => {

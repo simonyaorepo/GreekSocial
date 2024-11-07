@@ -39,6 +39,7 @@ const Friendship = sequelize.define('Friendship', {
 }, {
   tableName: 'friendship',  // Specify custom table name (optional)
   timestamps: false,  // Disable timestamps (as we're defining 'created_at' and 'updated_at' explicitly)
+  underscored: true  // Use snake_case for column names (e.g., created_at instead of createdAt)
 });
 
 // Define associations with Member model

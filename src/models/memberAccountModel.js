@@ -44,6 +44,7 @@ const MemberAccount = sequelize.define('MemberAccount', {
 }, {
   tableName: 'member_account',  // Specify custom table name (optional)
   timestamps: false,  // Disable default Sequelize timestamps
+  underscored: true
 });
 
 // Define associations with the Member model

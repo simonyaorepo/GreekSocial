@@ -43,7 +43,8 @@ const ChapterAccount = sequelize.define('ChapterAccount', {
   },
 }, {
   tableName: 'chapter_account',  // Specify custom table name
-  timestamps: false,  // Disable default Sequelize timestamps
+  timestamps: false,
+  underscored: true  // Disable default Sequelize timestamps
 });
 
 // Define associations with the Chapter model

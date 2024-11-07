@@ -32,6 +32,7 @@ const Like = sequelize.define('Like', {
 }, {
   tableName: 'like',
   timestamps: false,
+  underscored: true
 });
 
 Like.associate = (models) => {

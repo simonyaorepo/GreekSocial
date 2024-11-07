@@ -53,6 +53,7 @@ const Notification = sequelize.define('Notification', {
 }, {
   tableName: 'notifications',
   timestamps: false,
+  underscored: true
 });
 
 // Associations

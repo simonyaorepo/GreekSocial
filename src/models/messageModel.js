@@ -35,6 +35,7 @@ const Message = sequelize.define('Message', {
 }, {
   tableName: 'message',
   timestamps: false,
+  underscored: true
 });
 
 Message.associate = (models) => {

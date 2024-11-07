@@ -11,6 +11,7 @@ const modelFiles = fs.readdirSync(path.join(__dirname, '../models')).filter(file
 
 modelFiles.forEach(file => {
   // Dynamically import each model file
+  console.log('Loading model:', file);
   const model = require(path.join(__dirname, '../models', file));
   models[model.name] = model;
 });
@@ -18,9 +19,12 @@ modelFiles.forEach(file => {
 // Set up associations for each model (if they exist)
 Object.keys(models).forEach(modelName => {
   if (models[modelName].associate) {
+    console.log(`Associating model: ${modelName}`);
     models[modelName].associate(models);
   }
 });
+
+console.log('Models:', models);
 
 // Sync all models to the database
 sequelize.sync({ force: true })  // 'force: true' will drop and recreate tables (use with caution in production)

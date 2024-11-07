@@ -44,6 +44,7 @@ const OrganizationAccount = sequelize.define('OrganizationAccount', {
 }, {
   tableName: 'organization_account',  // Specify custom table name
   timestamps: false,  // Disable default Sequelize timestamps
+  underscored: true
 });
 
 // Define associations with the Organization model
