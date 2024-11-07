@@ -1,19 +1,37 @@
-module.exports = (sequelize) => {
-    class Comment extends Model {}
-    Comment.init({
-        content: {
-            type: DataTypes.TEXT,
-            allowNull: false
-        },
-        postId: {
-            type: DataTypes.INTEGER,
-            references: { model: 'posts', key: 'id' }
-        },
-        memberId: {
-            type: DataTypes.INTEGER,
-            references: { model: 'members', key: 'id' }
-        }
-    }, { sequelize, modelName: 'comment' });
-
+// models/comment.js
+module.exports = (sequelize, DataTypes) => {
+    const Comment = sequelize.define('Comment', {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      post_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      user_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      content: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      created_at: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+      },
+    }, {
+      tableName: 'comments',
+      timestamps: false,
+    });
+  
+    Comment.associate = function(models) {
+      Comment.belongsTo(models.Post, { foreignKey: 'post_id' });
+      Comment.belongsTo(models.Member, { foreignKey: 'user_id' });
+    };
+  
     return Comment;
-};
+  };
+  

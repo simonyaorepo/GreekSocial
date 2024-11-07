@@ -1,15 +1,33 @@
-module.exports = (sequelize) => {
-    class Like extends Model {}
-    Like.init({
-        postId: {
-            type: DataTypes.INTEGER,
-            references: { model: 'posts', key: 'id' }
-        },
-        memberId: {
-            type: DataTypes.INTEGER,
-            references: { model: 'members', key: 'id' }
-        }
-    }, { sequelize, modelName: 'like' });
-
+// models/like.js
+module.exports = (sequelize, DataTypes) => {
+    const Like = sequelize.define('Like', {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+      },
+      post_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      user_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      created_at: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+      },
+    }, {
+      tableName: 'likes',
+      timestamps: false,
+    });
+  
+    Like.associate = function(models) {
+      Like.belongsTo(models.Post, { foreignKey: 'post_id' });
+      Like.belongsTo(models.Member, { foreignKey: 'user_id' });
+    };
+  
     return Like;
-};
+  };
+  
