@@ -49,6 +49,16 @@ Post.associate = (models) => {
   Post.belongsTo(models.Organization, { foreignKey: 'organization_id' });
   Post.hasMany(models.Comment, { foreignKey: 'post_id' });
   Post.hasMany(models.Like, { foreignKey: 'post_id' });
+
+  // Tagging: Many-to-many with Tag
+  if (models.Tag) {
+    Post.belongsToMany(models.Tag, {
+      through: 'PostTag',
+      foreignKey: 'post_id',
+      otherKey: 'tag_id',
+      as: 'tags',
+    });
+  }
 };
 
 module.exports = Post;

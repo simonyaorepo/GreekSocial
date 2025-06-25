@@ -25,17 +25,21 @@ const Organization = sequelize.define('Organization', {
 });
 
 Organization.associate = (models) => {
+  Organization.hasMany(models.Chapter, { foreignKey: 'organization_id' });
   Organization.hasMany(models.Post, { foreignKey: 'organization_id' });
   Organization.hasMany(models.Event, { foreignKey: 'organization_id' });
   Organization.hasMany(models.Notification, { foreignKey: 'organization_id' });
-
-  Organization.belongsToMany(models.Role, {
-    through: models.RolePermission,
-    foreignKey: 'organization_id',
-    as: 'roles',
-  });
-
   Organization.hasOne(models.OrganizationAccount, { foreignKey: 'organization_id' });
+
+  // Tagging: Many-to-many with Tag
+  if (models.Tag) {
+    Organization.belongsToMany(models.Tag, {
+      through: 'OrganizationTag',
+      foreignKey: 'organization_id',
+      otherKey: 'tag_id',
+      as: 'tags',
+    });
+  }
 };
 
 module.exports = Organization;

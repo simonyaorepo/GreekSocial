@@ -40,6 +40,12 @@ const MemberAccount = sequelize.define('MemberAccount', {
 
 MemberAccount.associate = (models) => {
   MemberAccount.belongsTo(models.Member, { foreignKey: 'member_id', as: 'member' });
+  MemberAccount.belongsToMany(models.Role, {
+    through: models.MemberAccountRole,
+    foreignKey: 'member_account_id',
+    otherKey: 'role_id',
+    as: 'roles',
+  });
 };
 
 module.exports = MemberAccount;

@@ -28,19 +28,71 @@ const Chapter = sequelize.define('Chapter', {
   underscored: true,
 });
 
+// Advanced/Custom Associations
 Chapter.associate = (models) => {
   Chapter.belongsTo(models.Organization, { foreignKey: 'organization_id' });
+  Chapter.hasMany(models.Member, { foreignKey: 'chapter_id' });
   Chapter.hasMany(models.Post, { foreignKey: 'chapter_id' });
   Chapter.hasMany(models.Event, { foreignKey: 'chapter_id' });
   Chapter.hasMany(models.Notification, { foreignKey: 'chapter_id' });
-
-  Chapter.belongsToMany(models.Role, {
-    through: models.RolePermission,
-    foreignKey: 'chapter_id',
-    as: 'roles',
-  });
-
   Chapter.hasOne(models.ChapterAccount, { foreignKey: 'chapter_id' });
+
+  // Tagging: Many-to-many with Tag
+  if (models.Tag) {
+    Chapter.belongsToMany(models.Tag, {
+      through: 'ChapterTag',
+      foreignKey: 'chapter_id',
+      otherKey: 'tag_id',
+      as: 'tags',
+    });
+  }
+
+  // Mentions: Many-to-many with Post/Event via ChapterMention
+  if (models.Post && models.ChapterMention) {
+    Chapter.belongsToMany(models.Post, {
+      through: models.ChapterMention,
+      foreignKey: 'chapter_id',
+      otherKey: 'post_id',
+      as: 'mentionedInPosts',
+    });
+  }
+  if (models.Event && models.ChapterMention) {
+    Chapter.belongsToMany(models.Event, {
+      through: models.ChapterMention,
+      foreignKey: 'chapter_id',
+      otherKey: 'event_id',
+      as: 'mentionedInEvents',
+    });
+  }
+
+  // Direct permissions: Many-to-many with Permission
+  if (models.Permission) {
+    Chapter.belongsToMany(models.Permission, {
+      through: 'ChapterPermission',
+      foreignKey: 'chapter_id',
+      otherKey: 'permission_id',
+      as: 'directPermissions',
+    });
+  }
+};
+
+// Example static method: Get all tags for a chapter
+Chapter.getTags = async function (chapterId) {
+  const chapter = await this.findByPk(chapterId, { include: ['tags'] });
+  return chapter ? chapter.tags : [];
+};
+
+// Example static method for permission check
+Chapter.hasPermission = async function(chapterId, permissionName, models) {
+  const chapter = await this.findByPk(chapterId, {
+    include: [{
+      model: models.Permission,
+      as: 'directPermissions',
+      where: { name: permissionName },
+      required: false,
+    }],
+  });
+  return chapter && chapter.directPermissions && chapter.directPermissions.length > 0;
 };
 
 module.exports = Chapter;

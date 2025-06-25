@@ -45,6 +45,16 @@ Member.associate = (models) => {
   Member.hasMany(models.Event, { foreignKey: 'member_id' });
 
   Member.hasOne(models.MemberAccount, { foreignKey: 'member_id' });
+
+  // Tagging: Many-to-many with Tag
+  if (models.Tag) {
+    Member.belongsToMany(models.Tag, {
+      through: 'MemberTag',
+      foreignKey: 'member_id',
+      otherKey: 'tag_id',
+      as: 'tags',
+    });
+  }
 };
 
 module.exports = Member;

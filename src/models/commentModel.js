@@ -35,6 +35,16 @@ const Comment = sequelize.define('Comment', {
 Comment.associate = (models) => {
   Comment.belongsTo(models.Post, { foreignKey: 'post_id' });
   Comment.belongsTo(models.Member, { foreignKey: 'member_id' });
+
+  // Tagging: Many-to-many with Tag
+  if (models.Tag) {
+    Comment.belongsToMany(models.Tag, {
+      through: 'CommentTag',
+      foreignKey: 'comment_id',
+      otherKey: 'tag_id',
+      as: 'tags',
+    });
+  }
 };
 
 module.exports = Comment;
