@@ -3,7 +3,8 @@ const router = express.Router();
 const { memberController } = require('../controllers');
 
 router.post('/', memberController.createMember);
-router.get('/', memberController.getMembers);
+router.get('/', memberController.getAllMembers);
+router.get('/:id', memberController.getMemberById);
 router.put('/:id', memberController.updateMember);
 router.delete('/:id', memberController.deleteMember);
 

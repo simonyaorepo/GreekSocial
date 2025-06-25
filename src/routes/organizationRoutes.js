@@ -3,7 +3,8 @@ const router = express.Router();
 const { organizationController } = require('../controllers');
 
 router.post('/', organizationController.createOrganization);
-router.get('/', organizationController.getOrganizations);
+router.get('/', organizationController.getAllOrganizations);
+router.get('/:id', organizationController.getOrganizationById);
 router.put('/:id', organizationController.updateOrganization);
 router.delete('/:id', organizationController.deleteOrganization);
 

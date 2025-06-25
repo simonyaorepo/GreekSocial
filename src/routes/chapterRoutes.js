@@ -3,7 +3,8 @@ const router = express.Router();
 const { chapterController } = require('../controllers');
 
 router.post('/', chapterController.createChapter);
-router.get('/', chapterController.getChapters);
+router.get('/', chapterController.getAllChapters);
+router.get('/:id', chapterController.getChapterById);
 router.put('/:id', chapterController.updateChapter);
 router.delete('/:id', chapterController.deleteChapter);
 
