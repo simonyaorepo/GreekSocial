@@ -1,5 +1,5 @@
 // services/likeService.js
-const Like = require('../models/Like');
+const {Like} = require('../models');
 
 exports.createLike = async (data) => {
     return await Like.create(data);

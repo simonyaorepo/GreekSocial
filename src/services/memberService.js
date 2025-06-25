@@ -1,5 +1,5 @@
 // services/memberService.js
-const Member = require('../models/Member');
+const {Member} = require('../models');
 
 exports.createMember = async (data) => {
     return await Member.create(data);

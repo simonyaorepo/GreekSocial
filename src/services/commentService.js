@@ -1,5 +1,5 @@
 // services/commentService.js
-const Comment = require('../models/Comment');
+const {Comment} = require('../models');
 
 exports.createComment = async (data) => {
     return await Comment.create(data);

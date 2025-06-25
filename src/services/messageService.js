@@ -1,5 +1,5 @@
 // services/messageService.js
-const Message = require('../models/Message');
+const {Message} = require('../models');
 
 exports.createMessage = async (data) => {
     return await Message.create(data);

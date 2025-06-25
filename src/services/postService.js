@@ -1,5 +1,5 @@
 // services/postService.js
-const Post = require('../models/Post');
+const {Post} = require('../models');
 
 exports.createPost = async (data) => {
     return await Post.create(data);

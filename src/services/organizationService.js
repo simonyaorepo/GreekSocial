@@ -1,5 +1,5 @@
 // services/organizationService.js
-const Organization = require('../models/Organization');
+const {Organization} = require('../models');
 
 exports.createOrganization = async (data) => {
     return await Organization.create(data);

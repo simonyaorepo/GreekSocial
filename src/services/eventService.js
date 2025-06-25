@@ -1,5 +1,5 @@
 // services/eventService.js
-const Event = require('../models/Event');
+const {Event} = require('../models');
 
 exports.createEvent = async (data) => {
     return await Event.create(data);

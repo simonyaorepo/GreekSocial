@@ -1,5 +1,5 @@
 // services/roleService.js
-const Role = require('../models/Role');
+const {Role} = require('../models');
 
 exports.createRole = async (data) => {
     return await Role.create(data);

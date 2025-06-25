@@ -1,5 +1,5 @@
 // services/chapterService.js
-const Chapter = require('../models/Chapter');
+const {Chapter} = require('../models');
 
 exports.createChapter = async (data) => {
     return await Chapter.create(data);

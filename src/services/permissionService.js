@@ -1,5 +1,5 @@
 // services/permissionService.js
-const Permission = require('../models/Permission');
+const {Permission} = require('../models');
 
 exports.createPermission = async (data) => {
     return await Permission.create(data);

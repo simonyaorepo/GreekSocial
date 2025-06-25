@@ -1,22 +1,22 @@
 const express = require('express');
 const router = express.Router();
 
-const chapterRoutes = require('./chapter');
-const chapterAccountRoutes = require('./chapterAccount');
-const commentRoutes = require('./comment');
-const eventRoutes = require('./event');
-const likeRoutes = require('./like');
-const messageRoutes = require('./message');
-const notificationRoutes = require('./notification');
-const organizationRoutes = require('./organization');
-const organizationAccountRoutes = require('./organizationAccount');
-const permissionRoutes = require('./permission');
-const postRoutes = require('./post');
-const roleRoutes = require('./role');
-const rolePermissionRoutes = require('./rolePermission');
-const memberRoutes = require('./member');
-const memberAccountRoutes = require('./memberAccount');
-const friendshipRoutes = require('./friendship');
+const chapterRoutes = require('./chapterRoutes');
+const chapterAccountRoutes = require('./chapterAccountRoutes');
+const commentRoutes = require('./commentRoutes');
+const eventRoutes = require('./eventRoutes');
+const likeRoutes = require('./likeRoutes');
+const messageRoutes = require('./messageRoutes');
+const notificationRoutes = require('./notificationRoutes');
+const organizationRoutes = require('./organizationRoutes');
+const organizationAccountRoutes = require('./organizationAccountRoutes');
+const permissionRoutes = require('./permissionRoutes');
+const postRoutes = require('./postRoutes');
+const roleRoutes = require('./roleRoutes');
+const rolePermissionRoutes = require('./rolePermissionRoutes');
+const memberRoutes = require('./memberRoutes');
+const memberAccountRoutes = require('./memberAccountRoutes');
+const friendshipRoutes = require('./friendshipRoutes');
 
 router.use('/chapters', chapterRoutes);
 router.use('/chapter-accounts', chapterAccountRoutes);

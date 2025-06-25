@@ -1,5 +1,5 @@
 // services/notificationService.js
-const Notification = require('../models/Notification');
+const {Notification} = require('../models');
 
 exports.createNotification = async (data) => {
     return await Notification.create(data);
