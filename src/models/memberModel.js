@@ -44,12 +44,6 @@ Member.associate = (models) => {
   Member.hasMany(models.Notification, { foreignKey: 'user_id' });
   Member.hasMany(models.Event, { foreignKey: 'member_id' });
 
-  Member.belongsToMany(models.Role, {
-    through: models.RolePermission,
-    foreignKey: 'member_id',
-    as: 'roles',
-  });
-
   Member.hasOne(models.MemberAccount, { foreignKey: 'member_id' });
 };
 

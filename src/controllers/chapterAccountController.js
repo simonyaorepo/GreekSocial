@@ -45,3 +45,51 @@ exports.deleteChapterAccount = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
+
+// Assign a role to a chapter account
+exports.assignRole = async (req, res) => {
+  try {
+    const { chapter_account_id, role_id } = req.body;
+    // TODO: Call service to assign role
+    await chapterAccountService.assignRoleToAccount(chapter_account_id, role_id);
+    res.status(201).json({ message: 'Role assigned to chapter account.' });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// Remove a role from a chapter account
+exports.removeRole = async (req, res) => {
+  try {
+    const { chapter_account_id, role_id } = req.body;
+    // TODO: Call service to remove role
+    await chapterAccountService.removeRoleFromAccount(chapter_account_id, role_id);
+    res.status(200).json({ message: 'Role removed from chapter account.' });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// Get all roles for a chapter account
+exports.getRoles = async (req, res) => {
+  try {
+    const { chapter_account_id } = req.params;
+    // TODO: Call service to get roles
+    const roles = await chapterAccountService.getRolesForAccount(chapter_account_id);
+    res.status(200).json(roles);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+// Get all permissions for a chapter account (aggregated from roles)
+exports.getPermissions = async (req, res) => {
+  try {
+    const { chapter_account_id } = req.params;
+    // TODO: Call service to get permissions
+    const permissions = await chapterAccountService.getPermissionsForAccount(chapter_account_id);
+    res.status(200).json(permissions);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};

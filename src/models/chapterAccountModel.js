@@ -41,6 +41,12 @@ const ChapterAccount = sequelize.define('ChapterAccount', {
 
 ChapterAccount.associate = (models) => {
   ChapterAccount.belongsTo(models.Chapter, { foreignKey: 'chapter_id', as: 'chapter' });
+  ChapterAccount.belongsToMany(models.Role, {
+    through: models.ChapterAccountRole,
+    foreignKey: 'chapter_account_id',
+    otherKey: 'role_id',
+    as: 'roles',
+  });
 };
 
 module.exports = ChapterAccount;

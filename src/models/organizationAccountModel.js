@@ -40,6 +40,12 @@ const OrganizationAccount = sequelize.define('OrganizationAccount', {
 
 OrganizationAccount.associate = (models) => {
   OrganizationAccount.belongsTo(models.Organization, { foreignKey: 'organization_id', as: 'organization' });
+  OrganizationAccount.belongsToMany(models.Role, {
+    through: models.OrganizationAccountRole,
+    foreignKey: 'organization_account_id',
+    otherKey: 'role_id',
+    as: 'roles',
+  });
 };
 
 module.exports = OrganizationAccount;
