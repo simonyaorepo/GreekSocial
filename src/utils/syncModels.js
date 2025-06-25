@@ -12,4 +12,12 @@ const syncModels = async () => {
   }
 };
 
+// Allow running directly: node src/utils/syncModels.js
+if (require.main === module) {
+  (async () => {
+    await syncModels();
+    process.exit(0);
+  })();
+}
+
 module.exports = { syncModels };

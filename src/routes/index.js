@@ -17,6 +17,10 @@ const rolePermissionRoutes = require('./rolePermissionRoutes');
 const memberRoutes = require('./memberRoutes');
 const memberAccountRoutes = require('./memberAccountRoutes');
 const friendshipRoutes = require('./friendshipRoutes');
+const tagRoutes = require('./tagRoutes');
+const memberAccountRoleRoutes = require('./memberAccountRoleRoutes');
+const chapterAccountRoleRoutes = require('./chapterAccountRoleRoutes');
+const organizationAccountRoleRoutes = require('./organizationAccountRoleRoutes');
 
 router.use('/chapters', chapterRoutes);
 router.use('/chapter-accounts', chapterAccountRoutes);
@@ -34,5 +38,9 @@ router.use('/role-permissions', rolePermissionRoutes);
 router.use('/members', memberRoutes);
 router.use('/member-accounts', memberAccountRoutes);
 router.use('/friendships', friendshipRoutes);
+router.use('/tags', tagRoutes);
+router.use('/member-account-roles', memberAccountRoleRoutes);
+router.use('/chapter-account-roles', chapterAccountRoleRoutes);
+router.use('/organization-account-roles', organizationAccountRoleRoutes);
 
 module.exports = router;

@@ -15,4 +15,8 @@ module.exports = {
   memberAccountService: require('./memberAccountService'),
   chapterAccountService: require('./chapterAccountService'),
   friendshipService: require('./friendshipService'),
+  tagService: require('./tagService'),
+  memberAccountRoleService: require('./memberAccountRoleService'),
+  chapterAccountRoleService: require('./chapterAccountRoleService'),
+  organizationAccountRoleService: require('./organizationAccountRoleService'),
 };
