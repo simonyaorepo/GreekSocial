@@ -12,6 +12,9 @@ const syncModels = async () => {
   }
 };
 
+// WARNING: Do not use { alter: true } or { force: true } in production! Use migrations for schema changes.
+// See: https://sequelize.org/master/manual/migrations.html
+
 // Allow running directly: node src/utils/syncModels.js
 if (require.main === module) {
   (async () => {

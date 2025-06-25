@@ -41,6 +41,8 @@ const Notification = sequelize.define('Notification', {
   tableName: 'notification',
   timestamps: true,
   underscored: true,
+  paranoid: true, // Enable soft deletes for audit and recovery
+  // Best practice: Use environment variables for config, enable logging, and audit changes
 });
 
 Notification.associate = (models) => {
@@ -48,5 +50,7 @@ Notification.associate = (models) => {
   Notification.belongsTo(models.Chapter, { foreignKey: 'chapter_id', as: 'chapter' });
   Notification.belongsTo(models.Organization, { foreignKey: 'organization_id', as: 'organization' });
 };
+
+// Best practice: Add hooks for audit logging (beforeUpdate, beforeDestroy, etc.)
 
 module.exports = Notification;

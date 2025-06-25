@@ -41,6 +41,8 @@ const Post = sequelize.define('Post', {
   tableName: 'post',
   timestamps: true,
   underscored: true,
+  paranoid: true, // Enable soft deletes for audit and recovery
+  // Best practice: Use environment variables for config, enable logging, and audit changes
 });
 
 Post.associate = (models) => {
@@ -60,5 +62,8 @@ Post.associate = (models) => {
     });
   }
 };
+
+// Best practice: Ensure sensitive fields (if any) are not exposed in responses
+// Best practice: Add hooks for audit logging (beforeUpdate, beforeDestroy, etc.)
 
 module.exports = Post;

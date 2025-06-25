@@ -30,11 +30,15 @@ const Message = sequelize.define('Message', {
   tableName: 'message',
   timestamps: true,
   underscored: true,
+  paranoid: true, // Enable soft deletes for audit and recovery
+  // Best practice: Use environment variables for config, enable logging, and audit changes
 });
 
 Message.associate = (models) => {
   Message.belongsTo(models.Member, { foreignKey: 'sender_id', as: 'sender' });
   Message.belongsTo(models.Member, { foreignKey: 'receiver_id', as: 'receiver' });
 };
+
+// Best practice: Add hooks for audit logging (beforeUpdate, beforeDestroy, etc.)
 
 module.exports = Message;

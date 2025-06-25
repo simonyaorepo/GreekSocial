@@ -42,6 +42,7 @@ const Event = sequelize.define('Event', {
   tableName: 'event',
   timestamps: true,
   underscored: true,
+  paranoid: true, // Enable soft deletes for audit and recovery
 });
 
 Event.associate = (models) => {
@@ -50,3 +51,7 @@ Event.associate = (models) => {
 };
 
 module.exports = Event;
+
+// Best practice: Ensure sensitive fields (if any) are not exposed in responses
+// Best practice: Use environment variables for config, not hardcoded values
+// Best practice: Add hooks for audit logging if needed

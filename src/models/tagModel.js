@@ -21,6 +21,7 @@ const Tag = sequelize.define('Tag', {
   tableName: 'tag',
   timestamps: true,
   underscored: true,
+  paranoid: true, // Enable soft deletes for audit and recovery
 });
 
 Tag.associate = (models) => {
@@ -33,3 +34,7 @@ Tag.associate = (models) => {
 };
 
 module.exports = Tag;
+
+// Best practice: Ensure sensitive fields (if any) are not exposed in responses
+// Best practice: Use environment variables for config, not hardcoded values
+// Best practice: Add hooks for audit logging if needed

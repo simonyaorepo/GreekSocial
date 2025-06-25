@@ -26,6 +26,8 @@ const Chapter = sequelize.define('Chapter', {
   tableName: 'chapter',
   timestamps: true,
   underscored: true,
+  paranoid: true, // Enable soft deletes for audit and recovery
+  // Best practice: Use environment variables for config, enable logging, and audit changes
 });
 
 // Advanced/Custom Associations
@@ -94,5 +96,8 @@ Chapter.hasPermission = async function(chapterId, permissionName, models) {
   });
   return chapter && chapter.directPermissions && chapter.directPermissions.length > 0;
 };
+
+// Best practice: Ensure sensitive fields (if any) are not exposed in responses
+// Best practice: Add hooks for audit logging (beforeUpdate, beforeDestroy, etc.)
 
 module.exports = Chapter;

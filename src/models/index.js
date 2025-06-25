@@ -27,4 +27,10 @@ Object.keys(models).forEach(name => {
   }
 });
 
+// Example: To add extra fields to a join table, define them in the join model (e.g., ChapterTag)
+// Example: To enable soft deletes, add paranoid: true to model options
+// Example: For password hashing, use bcrypt in your account model's beforeCreate/beforeUpdate hooks
+// Example: Use process.env for all secrets and DB credentials
+// Example: Add CORS and rate limiting middleware in app.js
+
 module.exports = { ...models, sequelize };

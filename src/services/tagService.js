@@ -3,16 +3,28 @@ const { Tag, Chapter, Member, Organization, Post, Comment } = require('../models
 
 const tagService = {
   async createTag(data) {
-    return Tag.create(data);
+    // Best practice: Whitelist allowed fields to prevent unwanted data processing
+    const allowedFields = ['name', 'description'];
+    const filtered = {};
+    allowedFields.forEach(f => { if (data[f] !== undefined) filtered[f] = data[f]; });
+    return Tag.create(filtered);
   },
-  async getAllTags() {
-    return Tag.findAll();
+  async getAllTags({ where = {}, offset = 0, limit = 10 } = {}) {
+    // Only allow filtering by whitelisted fields
+    const allowedFilters = ['name'];
+    const filteredWhere = {};
+    Object.keys(where).forEach(key => { if (allowedFilters.includes(key)) filteredWhere[key] = where[key]; });
+    return Tag.findAndCountAll({ where: filteredWhere, offset, limit });
   },
   async getTagById(id) {
     return Tag.findByPk(id);
   },
   async updateTag(id, data) {
-    return Tag.update(data, { where: { id } });
+    // Best practice: Whitelist allowed fields to prevent unwanted data processing
+    const allowedFields = ['name', 'description'];
+    const filtered = {};
+    allowedFields.forEach(f => { if (data[f] !== undefined) filtered[f] = data[f]; });
+    return Tag.update(filtered, { where: { id } });
   },
   async deleteTag(id) {
     return Tag.destroy({ where: { id } });
@@ -57,3 +69,6 @@ function getModel(entity) {
 }
 
 module.exports = tagService;
+
+// Best practice: Handle soft deletes if paranoid: true is enabled
+// Best practice: Add logging and error handling as needed
