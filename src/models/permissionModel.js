@@ -17,6 +17,8 @@ const Permission = sequelize.define('Permission', {
   tableName: 'permission',
   timestamps: false, // Keep false as you had it
   underscored: true,
+  paranoid: true, // Enable soft deletes for audit and recovery
+  // Best practice: Use environment variables for config, enable logging, and audit changes
 });
 
 Permission.associate = (models) => {
@@ -27,5 +29,7 @@ Permission.associate = (models) => {
     as: 'roles',
   });
 };
+
+// Best practice: Add hooks for audit logging (beforeUpdate, beforeDestroy, etc.)
 
 module.exports = Permission;
