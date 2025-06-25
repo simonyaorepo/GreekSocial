@@ -1,7 +1,6 @@
+// eventModel.js
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const Chapter = require('./chapterModel');
-const Organization = require('./organizationModel');
 
 const Event = sequelize.define('Event', {
   id: {
@@ -11,19 +10,17 @@ const Event = sequelize.define('Event', {
   },
   chapter_id: {
     type: DataTypes.INTEGER,
-    references: {
-      model: Chapter,
-      key: 'id',
-    },
     allowNull: true,
+    references: { model: 'chapter', key: 'id' },
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
   },
   organization_id: {
     type: DataTypes.INTEGER,
-    references: {
-      model: Organization,
-      key: 'id',
-    },
     allowNull: true,
+    references: { model: 'organization', key: 'id' },
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
   },
   event_name: {
     type: DataTypes.STRING,
@@ -34,12 +31,8 @@ const Event = sequelize.define('Event', {
     allowNull: false,
   },
   description: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
     allowNull: true,
-  },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
   },
   visibility: {
     type: DataTypes.STRING,
@@ -47,8 +40,8 @@ const Event = sequelize.define('Event', {
   },
 }, {
   tableName: 'event',
-  timestamps: false,
-  underscored: true
+  timestamps: true,
+  underscored: true,
 });
 
 Event.associate = (models) => {

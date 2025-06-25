@@ -1,14 +1,6 @@
+// memberModel.js
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const Chapter = require('./chapterModel');
-const Friendship = require('./friendshipModel');
-const Post = require('./postModel');
-const Message = require('./messageModel');
-const Notification = require('./notificationModel');
-const Role = require('./roleModel');
-const RolePermission = require('./rolePermissionModel');
-const Event = require('./eventModel');
-const MemberAccount = require('./memberAccountModel'); // Linking to MemberAccount
 
 const Member = sequelize.define('Member', {
   id: {
@@ -18,11 +10,10 @@ const Member = sequelize.define('Member', {
   },
   chapter_id: {
     type: DataTypes.INTEGER,
-    references: {
-      model: Chapter,
-      key: 'id',
-    },
     allowNull: false,
+    references: { model: 'chapter', key: 'id' },
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   },
   name: {
     type: DataTypes.STRING,
@@ -39,10 +30,10 @@ const Member = sequelize.define('Member', {
   },
 }, {
   tableName: 'member',
-  timestamps: false,
+  timestamps: true,
+  underscored: true,
 });
 
-// Associations
 Member.associate = (models) => {
   Member.belongsTo(models.Chapter, { foreignKey: 'chapter_id' });
   Member.hasMany(models.Friendship, { foreignKey: 'member_id' });
@@ -53,14 +44,12 @@ Member.associate = (models) => {
   Member.hasMany(models.Notification, { foreignKey: 'user_id' });
   Member.hasMany(models.Event, { foreignKey: 'member_id' });
 
-  // Many-to-many relationship with roles
   Member.belongsToMany(models.Role, {
     through: models.RolePermission,
     foreignKey: 'member_id',
     as: 'roles',
   });
 
-  // Linking to MemberAccount (one-to-one)
   Member.hasOne(models.MemberAccount, { foreignKey: 'member_id' });
 };
 

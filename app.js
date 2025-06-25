@@ -1,20 +1,19 @@
 const express = require('express');
-const app = express();
 const cors = require('cors');
-const routes = require('./routes'); // Adjust path as necessary
-const controllers = require('./controllers');
+const dotenv = require('dotenv');
+const routes = require('./src/routes');
+const errorHandler = require('./src/utils/errorHandler');
 
-app.use(express.json());
+dotenv.config();
+
+const app = express();
+
 app.use(cors());
-app.use(bodyParser.json()); // Parse JSON request bodies
-app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded request bodies
-app.use('/api', routes); // Prefix all routes with /api
+app.use(express.json());
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
-});
+app.use('/api', routes);
 
-app.use((err, req, res, next) => {
-    res.status(err.status || 500).json({ message: err.message });
-  });
+// Global error handler middleware
+app.use(errorHandler);
+
+module.exports = app;

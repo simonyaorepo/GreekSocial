@@ -1,7 +1,6 @@
+// permissionModel.js
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const Role = require('./roleModel');  // Import the Role model
-const RolePermission = require('./rolePermissionModel');  // Import the RolePermission model
 
 const Permission = sequelize.define('Permission', {
   id: {
@@ -16,11 +15,11 @@ const Permission = sequelize.define('Permission', {
   },
 }, {
   tableName: 'permission',
-  timestamps: false,
+  timestamps: false, // Keep false as you had it
+  underscored: true,
 });
 
 Permission.associate = (models) => {
-  // Many-to-many relationship with Role through RolePermission
   Permission.belongsToMany(models.Role, {
     through: models.RolePermission,
     foreignKey: 'permission_id',

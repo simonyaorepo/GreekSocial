@@ -1,36 +1,32 @@
+// rolePermissionModel.js
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const Role = require('./roleModel');  // Import the Role model
-const Permission = require('./permissionModel');  // Import the Permission model
 
 const RolePermission = sequelize.define('RolePermission', {
   role_id: {
     type: DataTypes.INTEGER,
-    references: {
-      model: Role,
-      key: 'id',
-    },
     allowNull: false,
+    references: { model: 'role', key: 'id' },
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    primaryKey: true,
   },
   permission_id: {
     type: DataTypes.INTEGER,
-    references: {
-      model: Permission,
-      key: 'id',
-    },
     allowNull: false,
+    references: { model: 'permission', key: 'id' },
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+    primaryKey: true,
   },
 }, {
   tableName: 'role_permission',
   timestamps: false,
+  underscored: true,
 });
 
-// Optional: You could define the associations in RolePermission if you want
 RolePermission.associate = (models) => {
-  // Each RolePermission belongs to one Role
   RolePermission.belongsTo(models.Role, { foreignKey: 'role_id' });
-
-  // Each RolePermission belongs to one Permission
   RolePermission.belongsTo(models.Permission, { foreignKey: 'permission_id' });
 };
 

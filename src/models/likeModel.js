@@ -1,7 +1,6 @@
+// likeModel.js
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const Post = require('./postModel');
-const Member = require('./memberModel');
 
 const Like = sequelize.define('Like', {
   id: {
@@ -11,28 +10,22 @@ const Like = sequelize.define('Like', {
   },
   post_id: {
     type: DataTypes.INTEGER,
-    references: {
-      model: Post,
-      key: 'id',
-    },
     allowNull: false,
+    references: { model: 'post', key: 'id' },
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   },
   member_id: {
     type: DataTypes.INTEGER,
-    references: {
-      model: Member,
-      key: 'id',
-    },
     allowNull: false,
-  },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
+    references: { model: 'member', key: 'id' },
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   },
 }, {
   tableName: 'like',
-  timestamps: false,
-  underscored: true
+  timestamps: true,
+  underscored: true,
 });
 
 Like.associate = (models) => {

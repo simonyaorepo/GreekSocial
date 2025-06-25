@@ -1,6 +1,6 @@
+// memberAccountModel.js
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const Member = require('./memberModel');
 
 const MemberAccount = sequelize.define('MemberAccount', {
   id: {
@@ -10,11 +10,10 @@ const MemberAccount = sequelize.define('MemberAccount', {
   },
   member_id: {
     type: DataTypes.INTEGER,
-    references: {
-      model: Member,  // References the 'id' column of the Member model
-      key: 'id',
-    },
     allowNull: false,
+    references: { model: 'member', key: 'id' },
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   },
   account_type: {
     type: DataTypes.STRING,
@@ -27,27 +26,18 @@ const MemberAccount = sequelize.define('MemberAccount', {
   email: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,  // Ensure the email is unique
+    unique: true,
   },
   password_hash: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,  // Set to the current timestamp by default
-  },
-  updated_at: {
-    type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,  // Set to the current timestamp by default
-  },
 }, {
-  tableName: 'member_account',  // Specify custom table name (optional)
-  timestamps: false,  // Disable default Sequelize timestamps
-  underscored: true
+  tableName: 'member_account',
+  timestamps: true,
+  underscored: true,
 });
 
-// Define associations with the Member model
 MemberAccount.associate = (models) => {
   MemberAccount.belongsTo(models.Member, { foreignKey: 'member_id', as: 'member' });
 };

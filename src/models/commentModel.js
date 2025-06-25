@@ -1,7 +1,6 @@
+// commentModel.js
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const Post = require('./postModel');
-const Member = require('./memberModel');
 
 const Comment = sequelize.define('Comment', {
   id: {
@@ -11,32 +10,26 @@ const Comment = sequelize.define('Comment', {
   },
   post_id: {
     type: DataTypes.INTEGER,
-    references: {
-      model: Post,
-      key: 'id',
-    },
     allowNull: false,
+    references: { model: 'post', key: 'id' },
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   },
   member_id: {
     type: DataTypes.INTEGER,
-    references: {
-      model: Member,
-      key: 'id',
-    },
     allowNull: false,
+    references: { model: 'member', key: 'id' },
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   },
   content: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
     allowNull: false,
-  },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
   },
 }, {
   tableName: 'comment',
-  timestamps: false,
-  underscored: true
+  timestamps: true,
+  underscored: true,
 });
 
 Comment.associate = (models) => {

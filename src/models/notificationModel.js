@@ -1,8 +1,6 @@
+// notificationModel.js
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const Member = require('./memberModel');
-const Chapter = require('./chapterModel');
-const Organization = require('./organizationModel');
 
 const Notification = sequelize.define('Notification', {
   id: {
@@ -12,11 +10,10 @@ const Notification = sequelize.define('Notification', {
   },
   user_id: {
     type: DataTypes.INTEGER,
-    references: {
-      model: Member,  // Link notification to a member
-      key: 'id',
-    },
     allowNull: false,
+    references: { model: 'member', key: 'id' },
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   },
   message: {
     type: DataTypes.STRING,
@@ -26,37 +23,26 @@ const Notification = sequelize.define('Notification', {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,  // Set to current timestamp
-  },
-  updated_at: {
-    type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,  // Set to current timestamp
-  },
   chapter_id: {
     type: DataTypes.INTEGER,
-    references: {
-      model: Chapter,  // Link notification to a chapter (optional)
-      key: 'id',
-    },
-    allowNull: true,  // A notification can belong to a chapter
+    allowNull: true,
+    references: { model: 'chapter', key: 'id' },
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
   },
   organization_id: {
     type: DataTypes.INTEGER,
-    references: {
-      model: Organization,  // Link notification to an organization (optional)
-      key: 'id',
-    },
-    allowNull: true,  // A notification can belong to an organization
+    allowNull: true,
+    references: { model: 'organization', key: 'id' },
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
   },
 }, {
-  tableName: 'notifications',
-  timestamps: false,
-  underscored: true
+  tableName: 'notification',
+  timestamps: true,
+  underscored: true,
 });
 
-// Associations
 Notification.associate = (models) => {
   Notification.belongsTo(models.Member, { foreignKey: 'user_id', as: 'user' });
   Notification.belongsTo(models.Chapter, { foreignKey: 'chapter_id', as: 'chapter' });

@@ -1,6 +1,6 @@
+// messageModel.js
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const Member = require('./memberModel');
 
 const Message = sequelize.define('Message', {
   id: {
@@ -10,32 +10,26 @@ const Message = sequelize.define('Message', {
   },
   sender_id: {
     type: DataTypes.INTEGER,
-    references: {
-      model: Member,
-      key: 'id',
-    },
     allowNull: false,
+    references: { model: 'member', key: 'id' },
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   },
   receiver_id: {
     type: DataTypes.INTEGER,
-    references: {
-      model: Member,
-      key: 'id',
-    },
     allowNull: false,
+    references: { model: 'member', key: 'id' },
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   },
   content: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
     allowNull: false,
-  },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
   },
 }, {
   tableName: 'message',
-  timestamps: false,
-  underscored: true
+  timestamps: true,
+  underscored: true,
 });
 
 Message.associate = (models) => {

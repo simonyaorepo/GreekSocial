@@ -1,10 +1,6 @@
+// postModel.js
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const Chapter = require('./chapterModel');
-const Member = require('./memberModel');
-const Organization = require('./organizationModel');
-const Comment = require('./commentModel');
-const Like = require('./likeModel');
 
 const Post = sequelize.define('Post', {
   id: {
@@ -14,39 +10,28 @@ const Post = sequelize.define('Post', {
   },
   member_id: {
     type: DataTypes.INTEGER,
-    references: {
-      model: Member,
-      key: 'id',
-    },
     allowNull: false,
+    references: { model: 'member', key: 'id' },
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   },
   chapter_id: {
     type: DataTypes.INTEGER,
-    references: {
-      model: Chapter,
-      key: 'id',
-    },
     allowNull: true,
+    references: { model: 'chapter', key: 'id' },
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
   },
   organization_id: {
     type: DataTypes.INTEGER,
-    references: {
-      model: Organization,
-      key: 'id',
-    },
     allowNull: true,
+    references: { model: 'organization', key: 'id' },
+    onDelete: 'SET NULL',
+    onUpdate: 'CASCADE',
   },
   content: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
     allowNull: false,
-  },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
-  },
-  updated_at: {
-    type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,
   },
   visibility: {
     type: DataTypes.STRING,
@@ -54,8 +39,8 @@ const Post = sequelize.define('Post', {
   },
 }, {
   tableName: 'post',
-  timestamps: false,
-  underscored: true
+  timestamps: true,
+  underscored: true,
 });
 
 Post.associate = (models) => {

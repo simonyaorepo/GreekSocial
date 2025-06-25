@@ -1,3 +1,4 @@
+// chapterAccountModel.js
 const { Sequelize, DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
 const Chapter = require('./chapterModel');
@@ -10,11 +11,10 @@ const ChapterAccount = sequelize.define('ChapterAccount', {
   },
   chapter_id: {
     type: DataTypes.INTEGER,
-    references: {
-      model: Chapter,  // References the 'id' column of the Chapter model
-      key: 'id',
-    },
     allowNull: false,
+    references: { model: 'chapter', key: 'id' },
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
   },
   account_type: {
     type: DataTypes.STRING,
@@ -27,27 +27,18 @@ const ChapterAccount = sequelize.define('ChapterAccount', {
   email: {
     type: DataTypes.STRING,
     allowNull: false,
-    unique: true,  // Ensure the email is unique
+    unique: true,
   },
   password_hash: {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  created_at: {
-    type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,  // Set to the current timestamp by default
-  },
-  updated_at: {
-    type: DataTypes.DATE,
-    defaultValue: Sequelize.NOW,  // Set to the current timestamp by default
-  },
 }, {
-  tableName: 'chapter_account',  // Specify custom table name
-  timestamps: false,
-  underscored: true  // Disable default Sequelize timestamps
+  tableName: 'chapter_account',
+  timestamps: true,
+  underscored: true,
 });
 
-// Define associations with the Chapter model
 ChapterAccount.associate = (models) => {
   ChapterAccount.belongsTo(models.Chapter, { foreignKey: 'chapter_id', as: 'chapter' });
 };
