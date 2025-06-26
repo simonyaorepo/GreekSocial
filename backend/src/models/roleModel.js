@@ -48,6 +48,12 @@ Role.associate = (models) => {
     otherKey: 'member_account_id',
     as: 'memberAccounts',
   });
+  Role.belongsToMany(models.Account, {
+    through: models.AccountRole,
+    foreignKey: 'role_id',
+    otherKey: 'account_id',
+    as: 'accounts',
+  });
 };
 
 module.exports = Role;

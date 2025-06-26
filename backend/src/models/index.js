@@ -20,6 +20,9 @@ models.OrganizationTag = require('./organizationTagModel');
 models.PostTag = require('./postTagModel');
 models.CommentTag = require('./commentTagModel');
 models.EventTag = require('./eventTagModel');
+models.AccountTag = require('./accountTagModel');
+models.AccountRole = require('./accountRoleModel');
+models.AccountPermission = require('./accountPermissionModel');
 
 Object.keys(models).forEach(name => {
   if (models[name].associate) {

@@ -8,18 +8,11 @@ const Event = sequelize.define('Event', {
     primaryKey: true,
     autoIncrement: true,
   },
-  chapter_id: {
+  account_id: {
     type: DataTypes.INTEGER,
-    allowNull: true,
-    references: { model: 'chapter', key: 'id' },
-    onDelete: 'SET NULL',
-    onUpdate: 'CASCADE',
-  },
-  organization_id: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-    references: { model: 'organization', key: 'id' },
-    onDelete: 'SET NULL',
+    allowNull: false,
+    references: { model: 'account', key: 'id' },
+    onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   },
   event_name: {
@@ -46,8 +39,8 @@ const Event = sequelize.define('Event', {
 });
 
 Event.associate = (models) => {
-  Event.belongsTo(models.Chapter, { foreignKey: 'chapter_id' });
-  Event.belongsTo(models.Organization, { foreignKey: 'organization_id' });
+  Event.belongsTo(models.Account, { foreignKey: 'account_id', as: 'account' });
+  // ...other associations remain unchanged
 };
 
 module.exports = Event;

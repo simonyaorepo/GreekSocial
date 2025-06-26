@@ -28,6 +28,12 @@ Permission.associate = (models) => {
     otherKey: 'role_id',
     as: 'roles',
   });
+  Permission.belongsToMany(models.Account, {
+    through: models.AccountPermission,
+    foreignKey: 'permission_id',
+    otherKey: 'account_id',
+    as: 'accounts',
+  });
 };
 
 // Best practice: Add hooks for audit logging (beforeUpdate, beforeDestroy, etc.)

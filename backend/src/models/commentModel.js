@@ -15,10 +15,10 @@ const Comment = sequelize.define('Comment', {
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   },
-  member_id: {
+  account_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    references: { model: 'member', key: 'id' },
+    references: { model: 'account', key: 'id' },
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   },
@@ -36,7 +36,7 @@ const Comment = sequelize.define('Comment', {
 
 Comment.associate = (models) => {
   Comment.belongsTo(models.Post, { foreignKey: 'post_id' });
-  Comment.belongsTo(models.Member, { foreignKey: 'member_id' });
+  Comment.belongsTo(models.Account, { foreignKey: 'account_id', as: 'account' });
 
   // Tagging: Many-to-many with Tag
   if (models.Tag) {

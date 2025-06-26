@@ -8,10 +8,10 @@ const Notification = sequelize.define('Notification', {
     primaryKey: true,
     autoIncrement: true,
   },
-  user_id: {
+  account_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    references: { model: 'member', key: 'id' },
+    references: { model: 'account', key: 'id' },
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   },
@@ -23,20 +23,6 @@ const Notification = sequelize.define('Notification', {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
   },
-  chapter_id: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-    references: { model: 'chapter', key: 'id' },
-    onDelete: 'SET NULL',
-    onUpdate: 'CASCADE',
-  },
-  organization_id: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-    references: { model: 'organization', key: 'id' },
-    onDelete: 'SET NULL',
-    onUpdate: 'CASCADE',
-  },
 }, {
   tableName: 'notification',
   timestamps: true,
@@ -46,9 +32,7 @@ const Notification = sequelize.define('Notification', {
 });
 
 Notification.associate = (models) => {
-  Notification.belongsTo(models.Member, { foreignKey: 'user_id', as: 'user' });
-  Notification.belongsTo(models.Chapter, { foreignKey: 'chapter_id', as: 'chapter' });
-  Notification.belongsTo(models.Organization, { foreignKey: 'organization_id', as: 'organization' });
+  Notification.belongsTo(models.Account, { foreignKey: 'account_id', as: 'account' });
 };
 
 // Best practice: Add hooks for audit logging (beforeUpdate, beforeDestroy, etc.)

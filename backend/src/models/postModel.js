@@ -8,25 +8,11 @@ const Post = sequelize.define('Post', {
     primaryKey: true,
     autoIncrement: true,
   },
-  member_id: {
+  account_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    references: { model: 'member', key: 'id' },
+    references: { model: 'account', key: 'id' },
     onDelete: 'CASCADE',
-    onUpdate: 'CASCADE',
-  },
-  chapter_id: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-    references: { model: 'chapter', key: 'id' },
-    onDelete: 'SET NULL',
-    onUpdate: 'CASCADE',
-  },
-  organization_id: {
-    type: DataTypes.INTEGER,
-    allowNull: true,
-    references: { model: 'organization', key: 'id' },
-    onDelete: 'SET NULL',
     onUpdate: 'CASCADE',
   },
   content: {
@@ -46,9 +32,7 @@ const Post = sequelize.define('Post', {
 });
 
 Post.associate = (models) => {
-  Post.belongsTo(models.Member, { foreignKey: 'member_id' });
-  Post.belongsTo(models.Chapter, { foreignKey: 'chapter_id' });
-  Post.belongsTo(models.Organization, { foreignKey: 'organization_id' });
+  Post.belongsTo(models.Account, { foreignKey: 'account_id', as: 'account' });
   Post.hasMany(models.Comment, { foreignKey: 'post_id' });
   Post.hasMany(models.Like, { foreignKey: 'post_id' });
 

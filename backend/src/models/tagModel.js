@@ -25,6 +25,13 @@ const Tag = sequelize.define('Tag', {
 });
 
 Tag.associate = (models) => {
+  // Many-to-many with Account (unified)
+  Tag.belongsToMany(models.Account, {
+    through: models.AccountTag,
+    foreignKey: 'tag_id',
+    otherKey: 'account_id',
+    as: 'accounts',
+  });
   // Many-to-many with all taggable entities
   Tag.belongsToMany(models.Chapter, { through: 'ChapterTag', foreignKey: 'tag_id', otherKey: 'chapter_id', as: 'chapters' });
   Tag.belongsToMany(models.Member, { through: 'MemberTag', foreignKey: 'tag_id', otherKey: 'member_id', as: 'members' });
