@@ -1,9 +1,9 @@
-// organizationAccountModel.js
-const { Sequelize, DataTypes } = require('sequelize');
+// organizationDetailsModel.js
+const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
-const Account = require('./accountModel'); // Adjust the path as necessary
+const Account = require('./accountModel');
 
-const OrganizationAccount = sequelize.define('OrganizationAccount', {
+const OrganizationDetails = sequelize.define('OrganizationDetails', {
   account_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -22,13 +22,13 @@ const OrganizationAccount = sequelize.define('OrganizationAccount', {
   },
   // Add other org-specific fields here
 }, {
-  tableName: 'organization_account',
+  tableName: 'organization_details',
   timestamps: true,
   underscored: true,
   paranoid: true,
 });
 
-OrganizationAccount.belongsTo(Account, { foreignKey: 'account_id', as: 'account' });
-Account.hasOne(OrganizationAccount, { foreignKey: 'account_id' });
+OrganizationDetails.belongsTo(Account, { foreignKey: 'account_id', as: 'account' });
+Account.hasOne(OrganizationDetails, { foreignKey: 'account_id' });
 
-module.exports = OrganizationAccount;
+module.exports = OrganizationDetails;

@@ -1,8 +1,9 @@
-// memberAccountModel.js
-const { Sequelize, DataTypes } = require('sequelize');
+// memberDetailsModel.js
+const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
+const Account = require('./accountModel');
 
-const MemberAccount = sequelize.define('MemberAccount', {
+const MemberDetails = sequelize.define('MemberDetails', {
   account_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -25,15 +26,13 @@ const MemberAccount = sequelize.define('MemberAccount', {
   },
   // Add other member-specific fields here
 }, {
-  tableName: 'member_account',
+  tableName: 'member_details',
   timestamps: true,
   underscored: true,
   paranoid: true,
 });
 
-MemberAccount.associate = (models) => {
-  MemberAccount.belongsTo(models.Account, { foreignKey: 'account_id', as: 'account' });
-  models.Account.hasOne(MemberAccount, { foreignKey: 'account_id' });
-};
+MemberDetails.belongsTo(Account, { foreignKey: 'account_id', as: 'account' });
+Account.hasOne(MemberDetails, { foreignKey: 'account_id' });
 
-module.exports = MemberAccount;
+module.exports = MemberDetails;

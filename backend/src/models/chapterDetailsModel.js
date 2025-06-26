@@ -1,9 +1,9 @@
-// chapterAccountModel.js
-const { Sequelize, DataTypes } = require('sequelize');
+// chapterDetailsModel.js
+const { DataTypes } = require('sequelize');
 const { sequelize } = require('../config/db');
 const Account = require('./accountModel');
 
-const ChapterAccount = sequelize.define('ChapterAccount', {
+const ChapterDetails = sequelize.define('ChapterDetails', {
   account_id: {
     type: DataTypes.INTEGER,
     primaryKey: true,
@@ -25,13 +25,13 @@ const ChapterAccount = sequelize.define('ChapterAccount', {
   },
   // Add other chapter-specific fields here
 }, {
-  tableName: 'chapter_account',
+  tableName: 'chapter_details',
   timestamps: true,
   underscored: true,
   paranoid: true,
 });
 
-ChapterAccount.belongsTo(Account, { foreignKey: 'account_id', as: 'account' });
-Account.hasOne(ChapterAccount, { foreignKey: 'account_id' });
+ChapterDetails.belongsTo(Account, { foreignKey: 'account_id', as: 'account' });
+Account.hasOne(ChapterDetails, { foreignKey: 'account_id' });
 
-module.exports = ChapterAccount;
+module.exports = ChapterDetails;
