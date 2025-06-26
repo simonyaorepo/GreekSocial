@@ -15,6 +15,16 @@ const AccountRole = sequelize.define('AccountRole', {
     references: { model: 'role', key: 'id' },
     onDelete: 'CASCADE',
   },
+  scope_type: {
+    type: DataTypes.ENUM('organization', 'chapter'),
+    allowNull: false,
+  },
+  scope_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    references: { model: 'account', key: 'id' },
+    onDelete: 'CASCADE',
+  },
 }, {
   tableName: 'account_role',
   timestamps: false,
