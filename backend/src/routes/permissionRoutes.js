@@ -9,7 +9,7 @@ const { permissionController } = require('../controllers');
 // Best practice: Add Swagger docs and input validation at the route level
 
 router.post('/', permissionController.createPermission);
-router.get('/', permissionController.getPermissions);
+router.get('/', permissionController.getAllPermissions);
 router.put('/:id', permissionController.updatePermission);
 router.delete('/:id', permissionController.deletePermission);
 

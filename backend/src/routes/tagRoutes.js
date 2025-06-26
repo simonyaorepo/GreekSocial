@@ -8,11 +8,11 @@ const tagController = require('../controllers/tagController');
 // router.use(authenticateJWT); // Uncomment to protect all tag routes
 
 // CRUD
-router.post('/', tagController.create); // TODO: add checkPermission('tag:create')
-router.get('/', tagController.getAll);
-router.get('/:id', tagController.getById);
-router.put('/:id', tagController.update); // TODO: add checkPermission('tag:update')
-router.delete('/:id', tagController.delete); // TODO: add checkPermission('tag:delete')
+router.post('/', tagController.createTag); // TODO: add checkPermission('tag:create')
+router.get('/', tagController.getAllTags);
+router.get('/:id', tagController.getTagById);
+router.put('/:id', tagController.updateTag); // TODO: add checkPermission('tag:update')
+router.delete('/:id', tagController.deleteTag); // TODO: add checkPermission('tag:delete')
 
 // Assignment
 router.post('/assign', tagController.assignTag); // TODO: add permission check

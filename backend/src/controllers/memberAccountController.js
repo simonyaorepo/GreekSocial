@@ -115,7 +115,61 @@ exports.deleteMemberAccount = [
   }
 ];
 
-// Assign a role to a member account
-// Add validation and best practices to assignment endpoints as well
+exports.assignRole = async (req, res, next) => {
+  try {
+    const { member_account_id, role_id } = req.body;
+    if (!member_account_id || !role_id) {
+      return res.status(400).json({ message: 'member_account_id and role_id are required' });
+    }
+    // You should implement this service method to assign a role
+    const result = await memberAccountService.assignRoleToMemberAccount(member_account_id, role_id);
+    res.status(200).json({ message: 'Role assigned', result });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.removeRole = async (req, res, next) => {
+  try {
+    const { member_account_id, role_id } = req.body;
+    if (!member_account_id || !role_id) {
+      return res.status(400).json({ message: 'member_account_id and role_id are required' });
+    }
+    // You should implement this service method to remove a role
+    const result = await memberAccountService.removeRoleFromMemberAccount(member_account_id, role_id);
+    res.status(200).json({ message: 'Role removed', result });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getRoles = async (req, res, next) => {
+  try {
+    const { member_account_id } = req.params;
+    if (!member_account_id) {
+      return res.status(400).json({ message: 'member_account_id is required' });
+    }
+    // You should implement this service method to get roles
+    const roles = await memberAccountService.getRolesForMemberAccount(member_account_id);
+    res.status(200).json(roles);
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.getPermissions = async (req, res, next) => {
+  try {
+    const { member_account_id } = req.params;
+    if (!member_account_id) {
+      return res.status(400).json({ message: 'member_account_id is required' });
+    }
+    // You should implement this service method to get permissions
+    const permissions = await memberAccountService.getPermissionsForMemberAccount(member_account_id);
+    res.status(200).json(permissions);
+  } catch (error) {
+    next(error);
+  }
+};
+
 // Best practice: Add rate limiting and restrict CORS in production (see app.js/server.js)
 // Best practice: Add logging (e.g., winston, morgan) and health check endpoints

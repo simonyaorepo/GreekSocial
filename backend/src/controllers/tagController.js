@@ -58,6 +58,7 @@ const validateTagQuery = [
   },
 ];
 
+// Standard CRUD exports matching your other controller formats
 exports.createTag = [
   // TODO: Add authentication and permission middleware here
   // authenticateJWT, checkPermission('tag:create'),
@@ -129,6 +130,83 @@ exports.deleteTag = [
     try {
       await tagService.deleteTag(req.params.id);
       res.json({ success: true });
+    } catch (error) {
+      next(error);
+    }
+  }
+];
+
+// Assignment endpoints (add placeholder implementations if missing)
+const validateTagAssignment = [
+  body('entityType').isIn(['post', 'comment', 'member', 'chapter', 'organization']).withMessage('Invalid entityType'),
+  body('entityId').isInt({ min: 1 }).withMessage('entityId must be a positive integer'),
+  body('tagId').isInt({ min: 1 }).withMessage('tagId must be a positive integer'),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
+
+exports.assignTag = [
+  ...validateTagAssignment,
+  async (req, res, next) => {
+    try {
+      const { entityType, entityId, tagId } = req.body;
+      // TODO: Implement this in tagService
+      if (!tagService.assignTagToEntity) {
+        return res.status(501).json({ message: 'Tag assignment service not implemented' });
+      }
+      await tagService.assignTagToEntity(entityType, entityId, tagId);
+      res.json({ success: true });
+    } catch (error) {
+      next(error);
+    }
+  }
+];
+
+exports.removeTag = [
+  ...validateTagAssignment,
+  async (req, res, next) => {
+    try {
+      const { entityType, entityId, tagId } = req.body;
+      // TODO: Implement this in tagService
+      if (!tagService.removeTagFromEntity) {
+        return res.status(501).json({ message: 'Tag removal service not implemented' });
+      }
+      await tagService.removeTagFromEntity(entityType, entityId, tagId);
+      res.json({ success: true });
+    } catch (error) {
+      next(error);
+    }
+  }
+];
+
+const validateGetTagsFor = [
+  query('entityType').isIn(['post', 'comment', 'member', 'chapter', 'organization']).withMessage('Invalid entityType'),
+  query('entityId').isInt({ min: 1 }).withMessage('entityId must be a positive integer'),
+  (req, res, next) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    next();
+  },
+];
+
+exports.getTagsFor = [
+  ...validateGetTagsFor,
+  async (req, res, next) => {
+    try {
+      const { entityType, entityId } = req.query;
+      // TODO: Implement this in tagService
+      if (!tagService.getTagsForEntity) {
+        return res.status(501).json({ message: 'Get tags for entity service not implemented' });
+      }
+      const tags = await tagService.getTagsForEntity(entityType, entityId);
+      res.json({ tags });
     } catch (error) {
       next(error);
     }
