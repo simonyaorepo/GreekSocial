@@ -1,7 +1,0 @@
-The following models are unnecessary join-table models for the new unified structure and can be deleted:
-- chapterAccountRoleModel.js
-- memberAccountRoleModel.js
-- organizationAccountRoleModel.js
-- memberRoleModel.js
-
-Replace with AccountRole model and use in main Account/Role logic.
