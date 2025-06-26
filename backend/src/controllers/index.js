@@ -12,7 +12,5 @@ module.exports = {
     rolePermissionController: require('./rolePermissionController'),
     memberController: require('./memberController'),
     tagController: require('./tagController'),
-    memberAccountRoleController: require('./memberAccountRoleController'),
-    chapterAccountRoleController: require('./chapterAccountRoleController'),
-    organizationAccountRoleController: require('./organizationAccountRoleController'),
+    accountController: require('./accountController'),
 };

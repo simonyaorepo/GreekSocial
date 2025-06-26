@@ -34,12 +34,12 @@ Account.associate = (models) => {
     otherKey: 'tag_id',
     as: 'tags',
   });
-  Account.hasOne(models.MemberDetails, { foreignKey: 'account_id', as: 'memberDetails' });
-  Account.hasOne(models.ChapterDetails, { foreignKey: 'account_id', as: 'chapterDetails' });
-  Account.hasOne(models.OrganizationDetails, { foreignKey: 'account_id', as: 'organizationDetails' });
-  // Example: Account <-> Role association (if you want roles per account)
+  // Correct detail associations to match actual model names
+  Account.hasOne(models.MemberAccount, { foreignKey: 'account_id', as: 'memberAccount' });
+  Account.hasOne(models.ChapterAccount, { foreignKey: 'account_id', as: 'chapterAccount' });
+  Account.hasOne(models.OrganizationAccount, { foreignKey: 'account_id', as: 'organizationAccount' });
   Account.belongsToMany(models.Role, {
-    through: models.AccountRole, // You may need to create this join table
+    through: models.AccountRole,
     foreignKey: 'account_id',
     otherKey: 'role_id',
     as: 'roles',
