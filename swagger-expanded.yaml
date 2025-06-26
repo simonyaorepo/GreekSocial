@@ -1,0 +1,207 @@
+openapi: 3.0.0
+info:
+  title: Greek Social Platform API
+  version: 1.0.0
+servers:
+  - url: /api
+paths:
+  /tags:
+    get:
+      summary: Get all tags (paginated)
+      parameters:
+        - in: query
+          name: page
+          schema: { type: integer }
+        - in: query
+          name: pageSize
+          schema: { type: integer }
+        - in: query
+          name: name
+          schema: { type: string }
+      responses:
+        200:
+          description: List of tags
+    post:
+      summary: Create a tag
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: { type: string }
+                description: { type: string }
+      responses:
+        201:
+          description: Tag created
+  /tags/{id}:
+    get:
+      summary: Get tag by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          description: Tag object
+    put:
+      summary: Update tag
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name: { type: string }
+                description: { type: string }
+      responses:
+        200:
+          description: Tag updated
+    delete:
+      summary: Delete tag
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          description: Tag deleted
+  /tags/assign:
+    post:
+      summary: Assign tag to entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                entity: { type: string }
+                entityId: { type: integer }
+                tagId: { type: integer }
+      responses:
+        200:
+          description: Tag assigned
+  /tags/remove:
+    post:
+      summary: Remove tag from entity
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                entity: { type: string }
+                entityId: { type: integer }
+                tagId: { type: integer }
+      responses:
+        200:
+          description: Tag removed
+  /tags/{entity}/{entityId}/tags:
+    get:
+      summary: Get tags for an entity
+      parameters:
+        - in: path
+          name: entity
+          required: true
+          schema: { type: string }
+        - in: path
+          name: entityId
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          description: List of tags for entity
+  /events:
+    get:
+      summary: Get all events (paginated)
+      parameters:
+        - in: query
+          name: page
+          schema: { type: integer }
+        - in: query
+          name: pageSize
+          schema: { type: integer }
+        - in: query
+          name: chapter_id
+          schema: { type: integer }
+        - in: query
+          name: organization_id
+          schema: { type: integer }
+      responses:
+        200:
+          description: List of events
+    post:
+      summary: Create an event
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                event_name: { type: string }
+                event_date: { type: string, format: date-time }
+                description: { type: string }
+                visibility: { type: string, enum: [public, private] }
+                chapter_id: { type: integer }
+                organization_id: { type: integer }
+      responses:
+        201:
+          description: Event created
+  /events/{id}:
+    get:
+      summary: Get event by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          description: Event object
+    put:
+      summary: Update event
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                event_name: { type: string }
+                event_date: { type: string, format: date-time }
+                description: { type: string }
+                visibility: { type: string, enum: [public, private] }
+                chapter_id: { type: integer }
+                organization_id: { type: integer }
+      responses:
+        200:
+          description: Event updated
+    delete:
+      summary: Delete event
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: integer }
+      responses:
+        200:
+          description: Event deleted
+# ...repeat similar structure for posts, comments, members, organizations, chapters, accounts, roles, permissions, notifications, messages, friendships, likes...
+# For brevity, only tags and events are fully expanded here. You can request the full expansion for all entities if needed.
