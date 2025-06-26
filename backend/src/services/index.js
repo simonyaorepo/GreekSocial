@@ -5,7 +5,6 @@ module.exports = {
   likeService: require('./likeService'),
   messageService: require('./messageService'),
   notificationService: require('./notificationService'),
-  organizationService: require('./organizationService'),
   organizationAccountService: require('./organizationAccountService'),
   permissionService: require('./permissionService'),
   postService: require('./postService'),
@@ -17,4 +16,5 @@ module.exports = {
   friendshipService: require('./friendshipService'),
   tagService: require('./tagService'),
   accountService: require('./accountService'),
+  organizationService: require('./organizationService'),
 };

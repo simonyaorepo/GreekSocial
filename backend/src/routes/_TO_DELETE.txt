@@ -1,7 +1,0 @@
-The following routes are unnecessary join-table routes and can be deleted:
-- chapterAccountRoleRoutes.js
-- memberAccountRoleRoutes.js
-- organizationAccountRoleRoutes.js
-- memberRoleRoutes.js
-
-Replace with unified Account/Role logic in your main routes.
