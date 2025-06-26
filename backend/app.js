@@ -1,8 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const routes = require('./src/routes');
-const errorHandler = require('./src/utils/errorHandler');
+const routes = require('../src/routes');
+const errorHandler = require('../src/utils/errorHandler');
 
 dotenv.config();
 

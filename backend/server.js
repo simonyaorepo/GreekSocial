@@ -1,6 +1,6 @@
 const dotenv = require('dotenv');
-const { connectDB } = require('./src/config/db');
-const { syncModels } = require('./src/utils/syncModels');
+const { connectDB } = require('../src/config/db');
+const { syncModels } = require('../src/utils/syncModels');
 const app = require('./app');  // Import your configured Express app
 
 dotenv.config();
