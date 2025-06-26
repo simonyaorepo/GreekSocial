@@ -30,11 +30,24 @@ Tag.associate = (models) => {
     otherKey: 'account_id',
     as: 'accounts',
   });
-  Tag.belongsToMany(models.ChapterAccount, { through: 'ChapterTag', foreignKey: 'tag_id', otherKey: 'chapter_account_id', as: 'chapters' });
-  Tag.belongsToMany(models.MemberAccount, { through: 'MemberTag', foreignKey: 'tag_id', otherKey: 'member_account_id', as: 'members' });
-  Tag.belongsToMany(models.OrganizationAccount, { through: 'OrganizationTag', foreignKey: 'tag_id', otherKey: 'organization_account_id', as: 'organizations' });
-  Tag.belongsToMany(models.Post, { through: 'PostTag', foreignKey: 'tag_id', otherKey: 'post_id', as: 'posts' });
-  Tag.belongsToMany(models.Comment, { through: 'CommentTag', foreignKey: 'tag_id', otherKey: 'comment_id', as: 'comments' });
+  Tag.belongsToMany(models.Post, {
+    through: 'PostTag',
+    foreignKey: 'tag_id',
+    otherKey: 'post_id',
+    as: 'posts',
+  });
+  Tag.belongsToMany(models.Comment, {
+    through: 'CommentTag',
+    foreignKey: 'tag_id',
+    otherKey: 'comment_id',
+    as: 'comments',
+  });
+  Tag.belongsToMany(models.Event, {
+    through: 'EventTag',
+    foreignKey: 'tag_id',
+    otherKey: 'event_id',
+    as: 'events',
+  });
 };
 
 module.exports = Tag;
