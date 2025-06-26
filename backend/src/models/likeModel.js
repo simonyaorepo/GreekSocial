@@ -18,7 +18,7 @@ const Like = sequelize.define('Like', {
   member_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    references: { model: 'member', key: 'id' },
+    references: { model: 'member_account', key: 'account_id' },
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   },
@@ -29,8 +29,8 @@ const Like = sequelize.define('Like', {
 });
 
 Like.associate = (models) => {
-  Like.belongsTo(models.Post, { foreignKey: 'post_id' });
-  Like.belongsTo(models.Member, { foreignKey: 'member_id' });
+  Like.belongsTo(models.MemberAccount, { foreignKey: 'member_id', as: 'member' });
+  Like.belongsTo(models.Post, { foreignKey: 'post_id', as: 'post' });
 };
 
 module.exports = Like;

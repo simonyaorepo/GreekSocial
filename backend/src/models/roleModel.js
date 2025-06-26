@@ -30,24 +30,6 @@ Role.associate = (models) => {
     otherKey: 'permission_id',
     as: 'permissions',
   });
-  Role.belongsToMany(models.ChapterAccount, {
-    through: models.ChapterAccountRole,
-    foreignKey: 'role_id',
-    otherKey: 'chapter_account_id',
-    as: 'chapterAccounts',
-  });
-  Role.belongsToMany(models.OrganizationAccount, {
-    through: models.OrganizationAccountRole,
-    foreignKey: 'role_id',
-    otherKey: 'organization_account_id',
-    as: 'organizationAccounts',
-  });
-  Role.belongsToMany(models.MemberAccount, {
-    through: models.MemberAccountRole,
-    foreignKey: 'role_id',
-    otherKey: 'member_account_id',
-    as: 'memberAccounts',
-  });
   Role.belongsToMany(models.Account, {
     through: models.AccountRole,
     foreignKey: 'role_id',

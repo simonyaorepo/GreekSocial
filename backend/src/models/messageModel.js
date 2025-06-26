@@ -11,14 +11,14 @@ const Message = sequelize.define('Message', {
   sender_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    references: { model: 'member', key: 'id' },
+    references: { model: 'member_account', key: 'account_id' },
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   },
   receiver_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
-    references: { model: 'member', key: 'id' },
+    references: { model: 'member_account', key: 'account_id' },
     onDelete: 'CASCADE',
     onUpdate: 'CASCADE',
   },
@@ -26,19 +26,20 @@ const Message = sequelize.define('Message', {
     type: DataTypes.TEXT,
     allowNull: false,
   },
+  status: {
+    type: DataTypes.STRING,
+    defaultValue: 'unread',
+  },
 }, {
   tableName: 'message',
   timestamps: true,
   underscored: true,
-  paranoid: true, // Enable soft deletes for audit and recovery
-  // Best practice: Use environment variables for config, enable logging, and audit changes
+  paranoid: true,
 });
 
 Message.associate = (models) => {
-  Message.belongsTo(models.Member, { foreignKey: 'sender_id', as: 'sender' });
-  Message.belongsTo(models.Member, { foreignKey: 'receiver_id', as: 'receiver' });
+  Message.belongsTo(models.MemberAccount, { foreignKey: 'sender_id', as: 'sender' });
+  Message.belongsTo(models.MemberAccount, { foreignKey: 'receiver_id', as: 'receiver' });
 };
-
-// Best practice: Add hooks for audit logging (beforeUpdate, beforeDestroy, etc.)
 
 module.exports = Message;

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const chapterRoutes = require('./chapterRoutes');
+// Removed missing/legacy chapterRoutes
 const commentRoutes = require('./commentRoutes');
 const eventRoutes = require('./eventRoutes');
 const likeRoutes = require('./likeRoutes');
@@ -18,7 +18,7 @@ const tagRoutes = require('./tagRoutes');
 const accountRoutes = require('./accountRoutes');
 
 router.use('/accounts', accountRoutes);
-router.use('/chapters', chapterRoutes);
+// router.use('/chapters', chapterRoutes); // Removed: file does not exist
 router.use('/comments', commentRoutes);
 router.use('/events', eventRoutes);
 router.use('/likes', likeRoutes);
